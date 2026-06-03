@@ -19,7 +19,7 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex}
-
+ 
 /* LOGIN */
 #screen-login{align-items:center;justify-content:center;background:linear-gradient(135deg,#0f1a2e,#1a2744);padding:24px}
 .login-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:36px 28px;width:100%;max-width:380px;text-align:center}
@@ -27,7 +27,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .login-title{font-size:22px;font-weight:700;margin-bottom:4px}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:28px}
 .btn-login{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer}
-
+ 
 /* LOADING */
 #screen-loading{align-items:center;justify-content:center;background:var(--bg)}
 .loading-card{text-align:center;padding:40px}
@@ -37,7 +37,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .loading-progress{margin-top:16px;background:var(--bg3);border-radius:10px;height:6px;width:200px;margin:16px auto 0}
 .loading-bar{height:6px;background:var(--accent);border-radius:10px;width:0%;transition:width .3s}
 @keyframes spin{to{transform:rotate(360deg)}}
-
+ 
 /* HEADER */
 .app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
 .btn-back{background:var(--bg3);border:none;border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0}
@@ -45,7 +45,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .header-sub{font-size:11px;color:var(--text2)}
 .btn-sync{background:var(--green);border:none;border-radius:10px;padding:8px 12px;color:#0f1a2e;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0}
 .btn-sync:disabled{opacity:.5;cursor:not-allowed}
-
+ 
 /* ACCUEIL */
 .home-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));padding:20px 16px 24px;border-bottom:1px solid var(--border)}
 .home-welcome{font-size:13px;color:var(--text2);margin-bottom:4px}
@@ -68,7 +68,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .mode-icon{font-size:28px;margin-bottom:8px}
 .mode-name{font-size:14px;font-weight:600}
 .mode-desc{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4}
-
+ 
 /* LISTE */
 .search-bar{padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
 .search-input{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px}
@@ -81,7 +81,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .etudiant-name{font-size:15px;font-weight:500}
 .etudiant-score{font-size:12px;color:var(--text2);margin-top:2px}
 .etudiant-badge{font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px}
-
+ 
 /* SAISIE */
 .saisie-student-header{background:var(--bg2);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
 .saisie-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
@@ -104,7 +104,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .nav-btns{display:flex;gap:10px;padding:12px 16px;flex-shrink:0}
 .btn-prev{flex:1;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer}
 .btn-next{flex:1;padding:12px;background:var(--accent);border:none;border-radius:var(--radius);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
-
+ 
 /* RAPIDE */
 .rapide-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px}
 .critere-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
@@ -121,7 +121,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .rapide-case{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .12s}
 .rapide-case:active{transform:scale(.9)}
 .rapide-case.checked{border-color:transparent}
-
+ 
 /* TOAST */
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 20px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -129,7 +129,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </style>
 </head>
 <body>
-
+ 
 <!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
@@ -140,7 +140,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <p style="font-size:11px;color:var(--text2);margin-top:14px;line-height:1.5">Connexion sécurisée · Synchronisation Google Sheets</p>
   </div>
 </div>
-
+ 
 <!-- CHARGEMENT -->
 <div id="screen-loading" class="screen">
   <div class="loading-card">
@@ -150,7 +150,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
   </div>
 </div>
-
+ 
 <!-- ACCUEIL -->
 <div id="screen-home" class="screen">
   <div class="app-header">
@@ -185,7 +185,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
   </div>
 </div>
-
+ 
 <!-- LISTE -->
 <div id="screen-liste" class="screen">
   <div class="app-header">
@@ -198,11 +198,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
   <div class="etudiant-list" id="etudiant-list"></div>
 </div>
-
+ 
 <!-- SAISIE -->
 <div id="screen-saisie" class="screen">
   <div class="app-header">
-    <button class="btn-back" onclick="aller('liste')">←</button>
+    <button class="btn-back" onclick="afficherListeEtudiants(PRENOMS);aller('liste')">←</button>
     <div style="flex:1"><div class="header-title" id="saisie-header-name">—</div><div class="header-sub" id="saisie-header-sem">—</div></div>
     <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
@@ -223,7 +223,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <button class="btn-next" onclick="etudiantSuivant()">Suivant →</button>
   </div>
 </div>
-
+ 
 <!-- RAPIDE -->
 <div id="screen-rapide" class="screen">
   <div class="app-header">
@@ -240,9 +240,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
   <div class="rapide-list" id="rapide-list"></div>
 </div>
-
+ 
 <div class="toast" id="toast"></div>
-
+ 
 <script>
 const CLIENT_ID  = "182320571341-erkkksqh4epeetgmcuebeobhhc6sel87.apps.googleusercontent.com";
 const SHEET_ID   = "18eqFQg67E0aGq26S-ApqQoOd4cbx1THYbPp3qZ6xqMg";
@@ -250,13 +250,13 @@ const SHEET_NAME = "Suivi Global";
 const SCOPES     = "https://www.googleapis.com/auth/spreadsheets";
 const STORAGE_KEY = "suivi_bts_data";
 const TOKEN_KEY   = "suivi_bts_token";
-
+ 
 const PRENOMS = ["Alice","Baptiste","Camille","Dylan","Emma","Félix","Gaëlle","Hugo",
   "Inès","Jules","Karine","Léo","Manon","Nathan","Océane","Pierre",
   "Quentin","Romain","Sara","Thomas","Ugo","Valentine","William","Xavier",
   "Yasmine","Zoé","Adrien","Bérénice","Clément","Diane","Ethan","Flora",
   "Gabriel","Hannah","Ilan","Julie","Kevin","Laura","Maxime","Nina"];
-
+ 
 const CRITERES = [
   {id:"comp",  nom:"Comportement",   couleur:"#3ecf8e", cases:[{lbl:"✓ Bien",    pts:0.5,  type:"bool"}]},
   {id:"auto",  nom:"Autonomie",      couleur:"#f5c842", cases:[{lbl:"✓ Bien",    pts:0.5,  type:"bool"}]},
@@ -271,27 +271,27 @@ const CRITERES = [
     {lbl:"✗ Non fait", pts:-1.0,  type:"nf"}
   ]},
 ];
-
+ 
 // Colonnes sheets : 8 cases + 1 total = 9 colonnes par semaine
 const N_COLS_SEM = 9;
 const COL_OFFSET = 3; // 1-based : col 3 = C
 const ROW_START  = 7;
 const N_ETU      = 40;
 const N_SEM      = 10;
-
+ 
 let accessToken  = null;
 let semaine      = 1;
 let etudiantIdx  = 0;
 let critereRapide= 0;
 // Structure : donnees[sem][etuIdx][critIdx][caseIdx] = bool
 let donnees = {};
-
+ 
 const COLORS = ["#3ecf8e","#f5c842","#4f9cf9","#a78bfa","#fb923c","#f87171","#60a5fa","#34d399","#fbbf24","#e879f9"];
 function avatarColor(i){ return COLORS[i%COLORS.length]; }
 function initiales(p){ return p.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
 function showToast(msg,d=2500){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),d); }
 function aller(s){ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active')); document.getElementById('screen-'+s).classList.add('active'); }
-
+ 
 // ── DONNÉES ───────────────────────────────────────────────
 function initDonnees(){
   for(let s=1;s<=N_SEM;s++){
@@ -305,10 +305,10 @@ function initDonnees(){
     }
   }
 }
-
+ 
 function getVal(s,e,ci,ki){ try{ return donnees[s][e][ci][ki]||false; }catch(err){ return false; } }
 function setVal(s,e,ci,ki,v){ try{ donnees[s][e][ci][ki]=v; }catch(err){} sauvegarderLocal(); }
-
+ 
 function sauvegarderLocal(){
   try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(donnees)); }catch(e){}
 }
@@ -319,7 +319,7 @@ function chargerLocal(){
   }catch(e){}
   return false;
 }
-
+ 
 function scoreEtudiant(s,e){
   let total=0;
   CRITERES.forEach((c,ci)=>{ c.cases.forEach((cas,ki)=>{ if(getVal(s,e,ci,ki)) total+=cas.pts; }); });
@@ -329,7 +329,7 @@ function scoreSemaine(s){
   let sum=0; for(let i=0;i<N_ETU;i++) sum+=scoreEtudiant(s,i);
   return (sum/N_ETU).toFixed(2);
 }
-
+ 
 // ── COLONNES SHEETS ───────────────────────────────────────
 function colLettre(idx){
   let r="";
@@ -337,7 +337,7 @@ function colLettre(idx){
   return r;
 }
 function semColStart(s){ return COL_OFFSET+(s-1)*N_COLS_SEM; }
-
+ 
 // Retourne la colonne (1-based) pour un critère/case donné dans une semaine
 function colPourCase(s,ci,ki){
   let col=semColStart(s);
@@ -345,13 +345,13 @@ function colPourCase(s,ci,ki){
   col+=ki;
   return col;
 }
-
+ 
 // ── AUTH ──────────────────────────────────────────────────
 function connecterGoogle(){
   const url=window.location.href.split('?')[0].split('#')[0];
   window.location.href=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(url)}&response_type=token&scope=${encodeURIComponent(SCOPES)}&prompt=consent`;
 }
-
+ 
 function verifierToken(){
   // 1. Vérifier le hash (retour OAuth)
   const hash=window.location.hash;
@@ -369,13 +369,13 @@ function verifierToken(){
   }catch(e){}
   return false;
 }
-
+ 
 // ── CHARGEMENT DEPUIS SHEETS ──────────────────────────────
 async function chargerDepuisSheets(){
   if(!accessToken) return false;
   aller('loading');
   setLoading("Connexion à Google Sheets...", 10);
-
+ 
   try{
     // Lire toutes les données d'un coup avec batchGet
     const ranges=[];
@@ -390,9 +390,9 @@ async function chargerDepuisSheets(){
         });
       }
     }
-
+ 
     setLoading("Lecture des données...", 30);
-
+ 
     // Découper en lots de 500 ranges (limite API)
     const BATCH=500;
     let allValues=[];
@@ -419,9 +419,9 @@ async function chargerDepuisSheets(){
       const data=await resp.json();
       if(data.valueRanges) allValues=allValues.concat(data.valueRanges);
     }
-
+ 
     setLoading("Traitement des données...", 90);
-
+ 
     // Remplir donnees
     initDonnees();
     let idx=0;
@@ -439,24 +439,24 @@ async function chargerDepuisSheets(){
         });
       }
     }
-
+ 
     sauvegarderLocal();
     setLoading("Prêt !", 100);
     await new Promise(r=>setTimeout(r,500));
     return true;
-
+ 
   }catch(err){
     console.error(err);
     showToast("⚠️ Erreur chargement, données locales utilisées");
     return false;
   }
 }
-
+ 
 function setLoading(msg, pct){
   document.getElementById('loading-sub').textContent=msg;
   document.getElementById('loading-bar').style.width=pct+'%';
 }
-
+ 
 // ── SYNC VERS SHEETS ──────────────────────────────────────
 async function synchroniserVersSheets(){
   if(!accessToken){ showToast("⚠️ Non connecté"); return; }
@@ -492,7 +492,7 @@ async function synchroniserVersSheets(){
   }
   btns.forEach(b=>{ b.disabled=false; b.innerHTML='↑ Sync'; });
 }
-
+ 
 // ── ACCUEIL ───────────────────────────────────────────────
 function initAccueil(){
   const grid=document.getElementById('sem-grid');
@@ -507,7 +507,7 @@ function initAccueil(){
   document.getElementById('stat-semaine').textContent=semaine;
   document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
 }
-
+ 
 // ── LISTE ─────────────────────────────────────────────────
 function ouvrirListe(){
   document.getElementById('liste-sem-label').textContent=`Semaine ${semaine}`;
@@ -534,7 +534,7 @@ function afficherListeEtudiants(liste){
     c.appendChild(div);
   });
 }
-
+ 
 // ── SAISIE ────────────────────────────────────────────────
 function ouvrirSaisie(idx){ etudiantIdx=idx; afficherSaisie(); aller('saisie'); }
 function afficherSaisie(){
@@ -548,7 +548,7 @@ function afficherSaisie(){
   document.getElementById('saisie-avatar').style.cssText=`background:${color}22;color:${color}`;
   document.getElementById('saisie-score').textContent=scoreEtudiant(semaine,etudiantIdx).toFixed(2);
   document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
-
+ 
   const container=document.getElementById('criteres-list'); container.innerHTML='';
   CRITERES.forEach((crit,ci)=>{
     const ptsTxt=crit.cases.map(c=>(c.pts>0?'+':'')+c.pts).join(' / ');
@@ -560,7 +560,7 @@ function afficherSaisie(){
     </div><div class="critere-cases" id="cc-${ci}"></div>`;
     container.appendChild(card);
     const casesDiv=document.getElementById(`cc-${ci}`);
-
+ 
     if(crit.cases.length>1){
       const naBtn=document.createElement('button');
       naBtn.className='case-btn na-btn'+(crit.cases.every((_,ki)=>!getVal(semaine,etudiantIdx,ci,ki))?' checked':'');
@@ -568,7 +568,7 @@ function afficherSaisie(){
       naBtn.onclick=()=>{ crit.cases.forEach((_,ki)=>setVal(semaine,etudiantIdx,ci,ki,false)); afficherSaisie(); };
       casesDiv.appendChild(naBtn);
     }
-
+ 
     crit.cases.forEach((cas,ki)=>{
       const btn=document.createElement('button');
       const checked=getVal(semaine,etudiantIdx,ci,ki);
@@ -585,10 +585,10 @@ function afficherSaisie(){
     });
   });
 }
-
+ 
 function etudiantSuivant(){ if(etudiantIdx<N_ETU-1){ etudiantIdx++; afficherSaisie(); } else showToast("Dernier étudiant !"); }
 function etudiantPrecedent(){ if(etudiantIdx>0){ etudiantIdx--; afficherSaisie(); } else showToast("Premier étudiant !"); }
-
+ 
 // ── RAPIDE ────────────────────────────────────────────────
 function ouvrirRapide(){
   document.getElementById('rapide-sem-label').textContent=`Semaine ${semaine}`;
@@ -632,7 +632,7 @@ function toggleRapide(e,ci,ki){
   setVal(semaine,e,ci,ki,nv);
   afficherRapide();
 }
-
+ 
 // mode : 0 = tout cocher (case 0), -1 = tout décocher
 function toutCocherRapide(mode){
   const crit=CRITERES[critereRapide];
@@ -643,11 +643,11 @@ function toutCocherRapide(mode){
   afficherRapide();
   showToast(mode===0?"✅ Tous cochés":"☐ Tous décochés");
 }
-
+ 
 // ── INIT ──────────────────────────────────────────────────
 window.onload = async function(){
   initDonnees();
-
+ 
   if(verifierToken()){
     // Essayer de charger depuis Sheets, sinon utiliser local
     const ok=await chargerDepuisSheets();
@@ -666,4 +666,5 @@ window.onload = async function(){
 };
 </script>
 </body>
+</html>
 </html>
