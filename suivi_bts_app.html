@@ -5,363 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#1a2744">
 <title>Suivi BTS MCO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:       #0f1a2e;
-  --bg2:      #1a2744;
-  --bg3:      #243358;
-  --accent:   #4f9cf9;
-  --gold:     #f5c842;
-  --green:    #3ecf8e;
-  --red:      #f87171;
-  --orange:   #fb923c;
-  --text:     #e8edf8;
-  --text2:    #8fa3c8;
-  --border:   #2d3f5e;
-  --radius:   14px;
-  --comp:     #3ecf8e;
-  --auto:     #f5c842;
-  --parti:    #4f9cf9;
-  --qcm:      #a78bfa;
-  --tenue:    #fb923c;
-  --tm:       #f87171;
+  --bg:#0f1a2e; --bg2:#1a2744; --bg3:#243358;
+  --accent:#4f9cf9; --gold:#f5c842; --green:#3ecf8e;
+  --red:#f87171; --orange:#fb923c; --text:#e8edf8;
+  --text2:#8fa3c8; --border:#2d3f5e; --radius:14px;
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.screen{display:none;min-height:100vh;flex-direction:column}
+.screen.active{display:flex}
 
-/* ── ÉCRANS ── */
-.screen { display: none; min-height: 100vh; flex-direction: column; }
-.screen.active { display: flex; }
+/* LOGIN */
+#screen-login{align-items:center;justify-content:center;background:linear-gradient(135deg,#0f1a2e,#1a2744);padding:24px}
+.login-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:36px 28px;width:100%;max-width:380px;text-align:center}
+.login-logo{font-size:48px;margin-bottom:12px}
+.login-title{font-size:22px;font-weight:700;margin-bottom:4px}
+.login-sub{font-size:13px;color:var(--text2);margin-bottom:28px}
+.btn-login{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer}
 
-/* ── CONNEXION ── */
-#screen-login {
-  align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #0f1a2e 0%, #1a2744 50%, #0f1a2e 100%);
-  padding: 24px;
-}
-.login-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 36px 28px;
-  width: 100%; max-width: 380px;
-  text-align: center;
-}
-.login-logo { font-size: 48px; margin-bottom: 12px; }
-.login-title { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-.login-sub { font-size: 13px; color: var(--text2); margin-bottom: 28px; }
-.btn-login {
-  width: 100%; padding: 14px;
-  background: var(--accent);
-  color: #fff; border: none;
-  border-radius: var(--radius);
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px; font-weight: 600;
-  cursor: pointer; transition: opacity .2s;
-}
-.btn-login:hover { opacity: .85; }
-.login-note { font-size: 11px; color: var(--text2); margin-top: 16px; line-height: 1.5; }
+/* LOADING */
+#screen-loading{align-items:center;justify-content:center;background:var(--bg)}
+.loading-card{text-align:center;padding:40px}
+.loading-spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
+.loading-text{font-size:16px;font-weight:500;margin-bottom:8px}
+.loading-sub{font-size:13px;color:var(--text2)}
+.loading-progress{margin-top:16px;background:var(--bg3);border-radius:10px;height:6px;width:200px;margin:16px auto 0}
+.loading-bar{height:6px;background:var(--accent);border-radius:10px;width:0%;transition:width .3s}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── HEADER ── */
-.app-header {
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  padding: 14px 16px;
-  display: flex; align-items: center; gap: 12px;
-  position: sticky; top: 0; z-index: 100;
-}
-.btn-back {
-  background: var(--bg3); border: none; border-radius: 10px;
-  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-  color: var(--text); font-size: 18px; cursor: pointer; flex-shrink: 0;
-}
-.header-title { font-size: 16px; font-weight: 600; flex: 1; }
-.header-sub { font-size: 11px; color: var(--text2); }
-.btn-sync {
-  background: var(--green); border: none; border-radius: 10px;
-  padding: 8px 14px; color: #0f1a2e;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 700; cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
-  flex-shrink: 0;
-}
-.btn-sync:disabled { opacity: .5; cursor: not-allowed; }
+/* HEADER */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
+.btn-back{background:var(--bg3);border:none;border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0}
+.header-title{font-size:16px;font-weight:600;flex:1}
+.header-sub{font-size:11px;color:var(--text2)}
+.btn-sync{background:var(--green);border:none;border-radius:10px;padding:8px 12px;color:#0f1a2e;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0}
+.btn-sync:disabled{opacity:.5;cursor:not-allowed}
 
-/* ── ACCUEIL ── */
-#screen-home { padding: 0; }
-.home-hero {
-  background: linear-gradient(135deg, var(--bg2), var(--bg3));
-  padding: 20px 16px 24px;
-  border-bottom: 1px solid var(--border);
-}
-.home-welcome { font-size: 13px; color: var(--text2); margin-bottom: 4px; }
-.home-title { font-size: 24px; font-weight: 700; }
-.home-stats {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px; margin-top: 16px;
-}
-.stat-card {
-  background: rgba(255,255,255,.05);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 12px; text-align: center;
-}
-.stat-num { font-size: 22px; font-weight: 700; color: var(--accent); }
-.stat-lbl { font-size: 11px; color: var(--text2); margin-top: 2px; }
+/* ACCUEIL */
+.home-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));padding:20px 16px 24px;border-bottom:1px solid var(--border)}
+.home-welcome{font-size:13px;color:var(--text2);margin-bottom:4px}
+.home-title{font-size:24px;font-weight:700}
+.home-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}
+.stat-card{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center}
+.stat-num{font-size:22px;font-weight:700;color:var(--accent)}
+.stat-lbl{font-size:11px;color:var(--text2);margin-top:2px}
+.section-title{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);padding:16px 16px 8px}
+.sem-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;padding:0 16px 16px}
+.sem-btn{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 6px;text-align:center;cursor:pointer;transition:all .15s}
+.sem-btn.active{background:var(--accent);border-color:var(--accent)}
+.sem-btn:active{transform:scale(.95)}
+.sem-num{font-size:18px;font-weight:700}
+.sem-lbl{font-size:10px;color:var(--text2);margin-top:2px}
+.sem-btn.active .sem-lbl{color:rgba(255,255,255,.7)}
+.mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 24px}
+.mode-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;cursor:pointer;transition:all .15s}
+.mode-card:active{transform:scale(.97)}
+.mode-icon{font-size:28px;margin-bottom:8px}
+.mode-name{font-size:14px;font-weight:600}
+.mode-desc{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4}
 
-.section-title {
-  font-size: 11px; font-weight: 600; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--text2);
-  padding: 16px 16px 8px;
-}
+/* LISTE */
+.search-bar{padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.search-input{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px}
+.search-input::placeholder{color:var(--text2)}
+.search-input:focus{outline:none;border-color:var(--accent)}
+.etudiant-list{overflow-y:auto;flex:1}
+.etudiant-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.etudiant-item:active{background:var(--bg2)}
+.etudiant-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.etudiant-name{font-size:15px;font-weight:500}
+.etudiant-score{font-size:12px;color:var(--text2);margin-top:2px}
+.etudiant-badge{font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px}
 
-/* Semaines */
-.sem-grid {
-  display: grid; grid-template-columns: repeat(5, 1fr);
-  gap: 8px; padding: 0 16px 16px;
-}
-.sem-btn {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 12px 6px;
-  text-align: center; cursor: pointer; transition: all .15s;
-}
-.sem-btn.active { background: var(--accent); border-color: var(--accent); }
-.sem-btn:active { transform: scale(.95); }
-.sem-num { font-size: 18px; font-weight: 700; }
-.sem-lbl { font-size: 10px; color: var(--text2); margin-top: 2px; }
-.sem-btn.active .sem-lbl { color: rgba(255,255,255,.7); }
+/* SAISIE */
+.saisie-student-header{background:var(--bg2);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.saisie-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
+.saisie-name{font-size:17px;font-weight:700}
+.saisie-sem{font-size:12px;color:var(--text2);margin-top:2px}
+.saisie-score-display{margin-left:auto;text-align:right}
+.saisie-score-num{font-size:22px;font-weight:700;color:var(--gold)}
+.saisie-score-lbl{font-size:10px;color:var(--text2)}
+.criteres-list{padding:12px 16px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;flex:1}
+.critere-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+.critere-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.critere-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.critere-name{font-size:14px;font-weight:600;flex:1}
+.critere-pts{font-size:12px;color:var(--text2);font-family:'DM Mono',monospace}
+.critere-cases{display:flex;gap:8px;flex-wrap:wrap}
+.case-btn{flex:1;min-width:70px;padding:10px 8px;border-radius:10px;border:1.5px solid var(--border);background:var(--bg3);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;text-align:center}
+.case-btn:active{transform:scale(.95)}
+.case-btn.checked{border-color:transparent;color:#fff}
+.case-btn.na-btn{background:var(--bg3);color:var(--text2);font-size:12px}
+.nav-btns{display:flex;gap:10px;padding:12px 16px;flex-shrink:0}
+.btn-prev{flex:1;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer}
+.btn-next{flex:1;padding:12px;background:var(--accent);border:none;border-radius:var(--radius);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
 
-/* Mode rapide */
-.mode-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 24px; }
-.mode-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 16px;
-  cursor: pointer; transition: all .15s;
-}
-.mode-card:active { transform: scale(.97); }
-.mode-icon { font-size: 28px; margin-bottom: 8px; }
-.mode-name { font-size: 14px; font-weight: 600; }
-.mode-desc { font-size: 11px; color: var(--text2); margin-top: 4px; line-height: 1.4; }
+/* RAPIDE */
+.rapide-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px}
+.critere-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
+.critere-tabs::-webkit-scrollbar{display:none}
+.critere-tab{padding:7px 12px;border-radius:20px;border:1px solid var(--border);background:var(--bg3);color:var(--text2);font-size:12px;font-weight:500;white-space:nowrap;cursor:pointer;flex-shrink:0}
+.critere-tab.active{color:#0f1a2e;font-weight:700}
+.rapide-actions{display:flex;gap:8px;margin-top:8px}
+.btn-rapide-action{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer}
+.rapide-list{overflow-y:auto;flex:1}
+.rapide-item{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border)}
+.rapide-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.rapide-name{font-size:14px;font-weight:500;flex:1}
+.rapide-cases{display:flex;gap:6px}
+.rapide-case{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .12s}
+.rapide-case:active{transform:scale(.9)}
+.rapide-case.checked{border-color:transparent}
 
-/* ── LISTE ÉTUDIANTS ── */
-#screen-liste { }
-.search-bar {
-  padding: 12px 16px;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-}
-.search-input {
-  width: 100%; padding: 10px 14px;
-  background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius); color: var(--text);
-  font-family: 'DM Sans', sans-serif; font-size: 14px;
-}
-.search-input::placeholder { color: var(--text2); }
-.search-input:focus { outline: none; border-color: var(--accent); }
-
-.etudiant-list { overflow-y: auto; flex: 1; }
-.etudiant-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer; transition: background .1s;
-}
-.etudiant-item:active { background: var(--bg2); }
-.etudiant-avatar {
-  width: 40px; height: 40px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; font-weight: 700; flex-shrink: 0;
-}
-.etudiant-info { flex: 1; }
-.etudiant-name { font-size: 15px; font-weight: 500; }
-.etudiant-score { font-size: 12px; color: var(--text2); margin-top: 2px; }
-.etudiant-badge {
-  font-size: 13px; font-weight: 700;
-  padding: 4px 10px; border-radius: 20px;
-}
-
-/* ── SAISIE ÉTUDIANT ── */
-#screen-saisie { }
-.saisie-student-header {
-  background: var(--bg2);
-  padding: 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; gap: 14px;
-}
-.saisie-avatar {
-  width: 52px; height: 52px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 700; flex-shrink: 0;
-}
-.saisie-name { font-size: 18px; font-weight: 700; }
-.saisie-sem { font-size: 12px; color: var(--text2); margin-top: 2px; }
-.saisie-score-display {
-  margin-left: auto; text-align: right;
-}
-.saisie-score-num { font-size: 22px; font-weight: 700; color: var(--gold); }
-.saisie-score-lbl { font-size: 10px; color: var(--text2); }
-
-.criteres-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; flex: 1; }
-.critere-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 14px;
-}
-.critere-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.critere-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.critere-name { font-size: 14px; font-weight: 600; flex: 1; }
-.critere-pts { font-size: 12px; color: var(--text2); font-family: 'DM Mono', monospace; }
-
-.critere-cases { display: flex; gap: 8px; flex-wrap: wrap; }
-.case-btn {
-  flex: 1; min-width: 70px;
-  padding: 10px 8px; border-radius: 10px;
-  border: 1.5px solid var(--border);
-  background: var(--bg3);
-  color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all .15s;
-  text-align: center;
-}
-.case-btn:active { transform: scale(.95); }
-.case-btn.checked {
-  border-color: transparent;
-  color: #fff;
-}
-.case-btn.na-btn { background: var(--bg3); color: var(--text2); font-size: 12px; }
-.case-btn.na-btn.checked { background: var(--bg3); color: var(--text2); border-color: var(--text2); }
-
-/* ── SAISIE RAPIDE ── */
-#screen-rapide { }
-.rapide-header {
-  background: var(--bg2); border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
-}
-.critere-tabs {
-  display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px;
-}
-.critere-tabs::-webkit-scrollbar { display: none; }
-.critere-tab {
-  padding: 7px 14px; border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg3); color: var(--text2);
-  font-size: 12px; font-weight: 500; white-space: nowrap;
-  cursor: pointer; transition: all .15s; flex-shrink: 0;
-}
-.critere-tab.active { color: #0f1a2e; font-weight: 700; }
-
-.rapide-list { overflow-y: auto; flex: 1; }
-.rapide-item {
-  display: flex; align-items: center; gap: 12px;
-  padding: 10px 16px; border-bottom: 1px solid var(--border);
-}
-.rapide-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 12px; font-weight: 700; flex-shrink: 0;
-}
-.rapide-name { font-size: 14px; font-weight: 500; flex: 1; }
-.rapide-cases { display: flex; gap: 6px; }
-.rapide-case {
-  width: 36px; height: 36px; border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--bg3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px; cursor: pointer; transition: all .12s;
-}
-.rapide-case:active { transform: scale(.9); }
-.rapide-case.checked { border-color: transparent; }
-
-/* Bouton flottant */
-.fab {
-  position: fixed; bottom: 24px; right: 20px;
-  width: 56px; height: 56px; border-radius: 50%;
-  background: var(--green); border: none;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; cursor: pointer;
-  box-shadow: 0 4px 20px rgba(62,207,142,.4);
-  transition: transform .15s;
-}
-.fab:active { transform: scale(.9); }
-
-/* Toast */
-.toast {
-  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--bg2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 12px 20px;
-  font-size: 14px; font-weight: 500;
-  opacity: 0; transition: all .3s; pointer-events: none;
-  white-space: nowrap; z-index: 999;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* Loader */
-.loader {
-  display: inline-block; width: 18px; height: 18px;
-  border: 2px solid rgba(255,255,255,.3);
-  border-top-color: #fff; border-radius: 50%;
-  animation: spin .6s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.empty-state {
-  text-align: center; padding: 40px 20px; color: var(--text2);
-}
-.empty-icon { font-size: 40px; margin-bottom: 12px; }
+/* TOAST */
+.toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 20px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.loader{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
 </style>
 </head>
 <body>
 
-<!-- ═══ ÉCRAN CONNEXION ═══ -->
+<!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
     <div class="login-logo">📊</div>
     <div class="login-title">Suivi BTS MCO</div>
     <div class="login-sub">Lycée Blaise Pascal — Brie-Comte-Robert</div>
-    <button class="btn-login" onclick="connecterGoogle()">
-      🔐 Se connecter avec Google
-    </button>
-    <div class="login-note">
-      Connexion sécurisée via votre compte Google.<br>
-      Synchronisation avec votre Google Sheets.
-    </div>
+    <button class="btn-login" onclick="connecterGoogle()">🔐 Se connecter avec Google</button>
+    <p style="font-size:11px;color:var(--text2);margin-top:14px;line-height:1.5">Connexion sécurisée · Synchronisation Google Sheets</p>
   </div>
 </div>
 
-<!-- ═══ ÉCRAN ACCUEIL ═══ -->
+<!-- CHARGEMENT -->
+<div id="screen-loading" class="screen">
+  <div class="loading-card">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Chargement des données...</div>
+    <div class="loading-sub" id="loading-sub">Connexion à Google Sheets</div>
+    <div class="loading-progress"><div class="loading-bar" id="loading-bar"></div></div>
+  </div>
+</div>
+
+<!-- ACCUEIL -->
 <div id="screen-home" class="screen">
+  <div class="app-header">
+    <div style="flex:1">
+      <div class="header-title">📊 Suivi BTS MCO</div>
+      <div class="header-sub">Lycée Blaise Pascal</div>
+    </div>
+    <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
+  </div>
   <div class="home-hero">
     <div class="home-welcome">Bonjour 👋</div>
     <div class="home-title">Note d'investissement</div>
     <div class="home-stats">
-      <div class="stat-card">
-        <div class="stat-num" id="stat-etudiants">40</div>
-        <div class="stat-lbl">Étudiants</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-semaine">—</div>
-        <div class="stat-lbl">Semaine</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-moy">—</div>
-        <div class="stat-lbl">Moy. classe</div>
-      </div>
+      <div class="stat-card"><div class="stat-num">40</div><div class="stat-lbl">Étudiants</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-semaine">—</div><div class="stat-lbl">Semaine</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-moy">—</div><div class="stat-lbl">Moy. classe</div></div>
     </div>
   </div>
-
   <div class="section-title">Choisir la semaine</div>
   <div class="sem-grid" id="sem-grid"></div>
-
   <div class="section-title">Mode de saisie</div>
   <div class="mode-cards">
     <div class="mode-card" onclick="ouvrirListe()">
@@ -377,33 +186,25 @@ body {
   </div>
 </div>
 
-<!-- ═══ ÉCRAN LISTE ÉTUDIANTS ═══ -->
+<!-- LISTE -->
 <div id="screen-liste" class="screen">
   <div class="app-header">
     <button class="btn-back" onclick="aller('home')">←</button>
-    <div>
-      <div class="header-title">Étudiants</div>
-      <div class="header-sub" id="liste-sem-label">Semaine —</div>
-    </div>
-    <button class="btn-sync" id="btn-sync-liste" onclick="synchroniser()">
-      <span>↑</span> Sync
-    </button>
+    <div style="flex:1"><div class="header-title">Étudiants</div><div class="header-sub" id="liste-sem-label">Semaine —</div></div>
+    <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
   <div class="search-bar">
-    <input class="search-input" type="text" placeholder="🔍 Rechercher un étudiant..." id="search-input" oninput="filtrerEtudiants()">
+    <input class="search-input" type="text" placeholder="🔍 Rechercher..." id="search-input" oninput="filtrerEtudiants()">
   </div>
   <div class="etudiant-list" id="etudiant-list"></div>
 </div>
 
-<!-- ═══ ÉCRAN SAISIE ÉTUDIANT ═══ -->
+<!-- SAISIE -->
 <div id="screen-saisie" class="screen">
   <div class="app-header">
     <button class="btn-back" onclick="aller('liste')">←</button>
-    <div>
-      <div class="header-title" id="saisie-header-name">—</div>
-      <div class="header-sub" id="saisie-header-sem">Semaine —</div>
-    </div>
-    <button class="btn-sync" onclick="synchroniser()">↑ Sync</button>
+    <div style="flex:1"><div class="header-title" id="saisie-header-name">—</div><div class="header-sub" id="saisie-header-sem">—</div></div>
+    <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
   <div class="saisie-student-header">
     <div class="saisie-avatar" id="saisie-avatar"></div>
@@ -417,41 +218,39 @@ body {
     </div>
   </div>
   <div class="criteres-list" id="criteres-list"></div>
-
-  <div style="display:flex;gap:10px;padding:12px 16px;">
-    <button onclick="etudiantPrecedent()" style="flex:1;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer;">← Précédent</button>
-    <button onclick="etudiantSuivant()" style="flex:1;padding:12px;background:var(--accent);border:none;border-radius:var(--radius);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">Suivant →</button>
+  <div class="nav-btns">
+    <button class="btn-prev" onclick="etudiantPrecedent()">← Précédent</button>
+    <button class="btn-next" onclick="etudiantSuivant()">Suivant →</button>
   </div>
 </div>
 
-<!-- ═══ ÉCRAN SAISIE RAPIDE ═══ -->
+<!-- RAPIDE -->
 <div id="screen-rapide" class="screen">
   <div class="app-header">
     <button class="btn-back" onclick="aller('home')">←</button>
-    <div>
-      <div class="header-title">Saisie rapide</div>
-      <div class="header-sub" id="rapide-sem-label">Semaine —</div>
-    </div>
-    <button class="btn-sync" onclick="synchroniser()">↑ Sync</button>
+    <div style="flex:1"><div class="header-title">Saisie rapide</div><div class="header-sub" id="rapide-sem-label">—</div></div>
+    <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
   <div class="rapide-header">
     <div class="critere-tabs" id="critere-tabs"></div>
+    <div class="rapide-actions">
+      <button class="btn-rapide-action" onclick="toutCocherRapide(0)">✅ Tout cocher</button>
+      <button class="btn-rapide-action" onclick="toutCocherRapide(-1)">☐ Tout décocher</button>
+    </div>
   </div>
   <div class="rapide-list" id="rapide-list"></div>
-  <button class="fab" onclick="toutCocherRapide()" title="Tout cocher">✓</button>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────────────────────────
-const CLIENT_ID   = "182320571341-erkkksqh4epeetgmcuebeobhhc6sel87.apps.googleusercontent.com";
-const SHEET_ID    = "18eqFQg67E0aGq26S-ApqQoOd4cbx1THYbPp3qZ6xqMg";
-const SHEET_NAME  = "Suivi Global";
-const SCOPES      = "https://www.googleapis.com/auth/spreadsheets";
+const CLIENT_ID  = "182320571341-erkkksqh4epeetgmcuebeobhhc6sel87.apps.googleusercontent.com";
+const SHEET_ID   = "18eqFQg67E0aGq26S-ApqQoOd4cbx1THYbPp3qZ6xqMg";
+const SHEET_NAME = "Suivi Global";
+const SCOPES     = "https://www.googleapis.com/auth/spreadsheets";
+const STORAGE_KEY = "suivi_bts_data";
+const TOKEN_KEY   = "suivi_bts_token";
 
-// ── DONNÉES ───────────────────────────────────────────────────────────────────
 const PRENOMS = ["Alice","Baptiste","Camille","Dylan","Emma","Félix","Gaëlle","Hugo",
   "Inès","Jules","Karine","Léo","Manon","Nathan","Océane","Pierre",
   "Quentin","Romain","Sara","Thomas","Ugo","Valentine","William","Xavier",
@@ -459,409 +258,410 @@ const PRENOMS = ["Alice","Baptiste","Camille","Dylan","Emma","Félix","Gaëlle",
   "Gabriel","Hannah","Ilan","Julie","Kevin","Laura","Maxime","Nina"];
 
 const CRITERES = [
-  { id:"comp",  nom:"Comportement",   couleur:"#3ecf8e", cases:[{lbl:"✓ Bien",   pts:0.5,  col:0, type:"bool"}] },
-  { id:"auto",  nom:"Autonomie",      couleur:"#f5c842", cases:[{lbl:"✓ Bien",   pts:0.5,  col:1, type:"bool"}] },
-  { id:"parti", nom:"Participation",  couleur:"#4f9cf9", cases:[{lbl:"✓ Part.",  pts:0.25, col:2, type:"bool"}] },
-  { id:"qcm",   nom:"QCM",            couleur:"#a78bfa", cases:[{lbl:"✓ Fait",   pts:0.3,  col:3, type:"bool"}] },
-  { id:"tenue", nom:"Tenue",          couleur:"#fb923c", cases:[
-    {lbl:"✓ Bien",    pts:0.25,  col:4, type:"bien"},
-    {lbl:"✗ Jogging", pts:-0.5,  col:5, type:"jogging"}
+  {id:"comp",  nom:"Comportement",   couleur:"#3ecf8e", cases:[{lbl:"✓ Bien",    pts:0.5,  type:"bool"}]},
+  {id:"auto",  nom:"Autonomie",      couleur:"#f5c842", cases:[{lbl:"✓ Bien",    pts:0.5,  type:"bool"}]},
+  {id:"parti", nom:"Participation",  couleur:"#4f9cf9", cases:[{lbl:"✓ Part.",   pts:0.25, type:"bool"}]},
+  {id:"qcm",   nom:"QCM",            couleur:"#a78bfa", cases:[{lbl:"✓ Fait",    pts:0.3,  type:"bool"}]},
+  {id:"tenue", nom:"Tenue",          couleur:"#fb923c", cases:[
+    {lbl:"✓ Bien",     pts:0.25,  type:"bien"},
+    {lbl:"✗ Jogging",  pts:-0.5,  type:"jogging"}
   ]},
-  { id:"tm",    nom:"Travail Maison", couleur:"#f87171", cases:[
-    {lbl:"✓ Fait",    pts:0.7,   col:6, type:"fait"},
-    {lbl:"✗ Non fait",pts:-1.0,  col:7, type:"nf"}
+  {id:"tm", nom:"Travail Maison",    couleur:"#f87171", cases:[
+    {lbl:"✓ Fait",     pts:0.7,   type:"fait"},
+    {lbl:"✗ Non fait", pts:-1.0,  type:"nf"}
   ]},
 ];
 
-// N_CRIT_COLS = nb total de colonnes de cases par semaine
-// Tenue=2, TM=2, autres=1 → total=8 cases + 1 total = 9 cols/sem
-const N_COLS_SEM = 9; // 8 cases + 1 total semaine
-const COL_OFFSET = 3; // colonnes A,B fixes + 1 (1-indexed)
-const ROW_MASTER = 6;
+// Colonnes sheets : 8 cases + 1 total = 9 colonnes par semaine
+const N_COLS_SEM = 9;
+const COL_OFFSET = 3; // 1-based : col 3 = C
 const ROW_START  = 7;
 const N_ETU      = 40;
+const N_SEM      = 10;
 
-// ── ÉTAT ──────────────────────────────────────────────────────────────────────
-let accessToken   = null;
-let semaine       = 1;
-let etudiantIdx   = 0;
-let critereRapide = 0;
-let donneesLocales = {}; // { "sem_etu_crit_case": true/false }
+let accessToken  = null;
+let semaine      = 1;
+let etudiantIdx  = 0;
+let critereRapide= 0;
+// Structure : donnees[sem][etuIdx][critIdx][caseIdx] = bool
+let donnees = {};
 
-// ── UTILITAIRES ───────────────────────────────────────────────────────────────
-const COLORS = ["#3ecf8e","#f5c842","#4f9cf9","#a78bfa","#fb923c","#f87171",
-                "#60a5fa","#34d399","#fbbf24","#e879f9"];
+const COLORS = ["#3ecf8e","#f5c842","#4f9cf9","#a78bfa","#fb923c","#f87171","#60a5fa","#34d399","#fbbf24","#e879f9"];
+function avatarColor(i){ return COLORS[i%COLORS.length]; }
+function initiales(p){ return p.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
+function showToast(msg,d=2500){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),d); }
+function aller(s){ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active')); document.getElementById('screen-'+s).classList.add('active'); }
 
-function avatarColor(idx) { return COLORS[idx % COLORS.length]; }
-function initiales(prenom) {
-  return prenom.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
-}
-
-function showToast(msg, duration=2500) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-
-function aller(screen) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-'+screen).classList.add('active');
-}
-
-function cleKey(sem, etuIdx, critIdx, caseIdx) {
-  return `${sem}_${etuIdx}_${critIdx}_${caseIdx}`;
-}
-
-function getVal(sem, etuIdx, critIdx, caseIdx) {
-  return donneesLocales[cleKey(sem,etuIdx,critIdx,caseIdx)] || false;
-}
-
-function setVal(sem, etuIdx, critIdx, caseIdx, val) {
-  donneesLocales[cleKey(sem,etuIdx,critIdx,caseIdx)] = val;
-}
-
-function scoreEtudiant(sem, etuIdx) {
-  let total = 0;
-  CRITERES.forEach((crit, ci) => {
-    crit.cases.forEach((cas, ki) => {
-      if (getVal(sem, etuIdx, ci, ki)) {
-        // Pour Tenue : exclusif (Bien ou Jogging, pas les deux)
-        total += cas.pts;
-      }
-    });
-  });
-  return total;
-}
-
-function scoreSemaine(sem) {
-  let sum = 0;
-  for (let i=0; i<N_ETU; i++) sum += scoreEtudiant(sem, i);
-  return (sum/N_ETU).toFixed(2);
-}
-
-// ── GOOGLE AUTH ───────────────────────────────────────────────────────────────
-function connecterGoogle() {
-  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-    `client_id=${CLIENT_ID}&` +
-    `redirect_uri=${encodeURIComponent(window.location.href.split('?')[0])}&` +
-    `response_type=token&` +
-    `scope=${encodeURIComponent(SCOPES)}&` +
-    `prompt=consent`;
-  window.location.href = authUrl;
-}
-
-function verifierToken() {
-  const hash = window.location.hash;
-  if (hash && hash.includes('access_token')) {
-    const params = new URLSearchParams(hash.substring(1));
-    accessToken = params.get('access_token');
-    window.history.replaceState({}, document.title, window.location.pathname);
-    return true;
+// ── DONNÉES ───────────────────────────────────────────────
+function initDonnees(){
+  for(let s=1;s<=N_SEM;s++){
+    if(!donnees[s]) donnees[s]={};
+    for(let e=0;e<N_ETU;e++){
+      if(!donnees[s][e]) donnees[s][e]={};
+      CRITERES.forEach((c,ci)=>{
+        if(!donnees[s][e][ci]) donnees[s][e][ci]={};
+        c.cases.forEach((_,ki)=>{ if(donnees[s][e][ci][ki]===undefined) donnees[s][e][ci][ki]=false; });
+      });
+    }
   }
+}
+
+function getVal(s,e,ci,ki){ try{ return donnees[s][e][ci][ki]||false; }catch(err){ return false; } }
+function setVal(s,e,ci,ki,v){ try{ donnees[s][e][ci][ki]=v; }catch(err){} sauvegarderLocal(); }
+
+function sauvegarderLocal(){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(donnees)); }catch(e){}
+}
+function chargerLocal(){
+  try{
+    const d=localStorage.getItem(STORAGE_KEY);
+    if(d){ donnees=JSON.parse(d); return true; }
+  }catch(e){}
   return false;
 }
 
-// ── GOOGLE SHEETS API ─────────────────────────────────────────────────────────
-function colLettre(idx) {
-  let result = "";
-  while (idx > 0) {
-    idx--; result = String.fromCharCode(65 + idx%26) + result; idx = Math.floor(idx/26);
+function scoreEtudiant(s,e){
+  let total=0;
+  CRITERES.forEach((c,ci)=>{ c.cases.forEach((cas,ki)=>{ if(getVal(s,e,ci,ki)) total+=cas.pts; }); });
+  return total;
+}
+function scoreSemaine(s){
+  let sum=0; for(let i=0;i<N_ETU;i++) sum+=scoreEtudiant(s,i);
+  return (sum/N_ETU).toFixed(2);
+}
+
+// ── COLONNES SHEETS ───────────────────────────────────────
+function colLettre(idx){
+  let r="";
+  while(idx>0){ idx--; r=String.fromCharCode(65+idx%26)+r; idx=Math.floor(idx/26); }
+  return r;
+}
+function semColStart(s){ return COL_OFFSET+(s-1)*N_COLS_SEM; }
+
+// Retourne la colonne (1-based) pour un critère/case donné dans une semaine
+function colPourCase(s,ci,ki){
+  let col=semColStart(s);
+  for(let c=0;c<ci;c++) col+=CRITERES[c].cases.length;
+  col+=ki;
+  return col;
+}
+
+// ── AUTH ──────────────────────────────────────────────────
+function connecterGoogle(){
+  const url=window.location.href.split('?')[0].split('#')[0];
+  window.location.href=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(url)}&response_type=token&scope=${encodeURIComponent(SCOPES)}&prompt=consent`;
+}
+
+function verifierToken(){
+  // 1. Vérifier le hash (retour OAuth)
+  const hash=window.location.hash;
+  if(hash&&hash.includes('access_token')){
+    const p=new URLSearchParams(hash.substring(1));
+    accessToken=p.get('access_token');
+    try{ localStorage.setItem(TOKEN_KEY, accessToken); }catch(e){}
+    window.history.replaceState({},'',window.location.pathname);
+    return true;
   }
-  return result;
+  // 2. Vérifier le localStorage
+  try{
+    const t=localStorage.getItem(TOKEN_KEY);
+    if(t){ accessToken=t; return true; }
+  }catch(e){}
+  return false;
 }
 
-function semColStart(s) { return COL_OFFSET + (s-1)*N_COLS_SEM; }
+// ── CHARGEMENT DEPUIS SHEETS ──────────────────────────────
+async function chargerDepuisSheets(){
+  if(!accessToken) return false;
+  aller('loading');
+  setLoading("Connexion à Google Sheets...", 10);
 
-function cellRef(s, etuIdx, critIdx, caseIdx) {
-  // Calculer la colonne exacte
-  let col = semColStart(s);
-  for (let ci=0; ci<critIdx; ci++) col += CRITERES[ci].cases.length;
-  col += caseIdx;
-  const row = ROW_START + etuIdx*2;
-  return `${SHEET_NAME}!${colLettre(col)}${row}`;
-}
+  try{
+    // Lire toutes les données d'un coup avec batchGet
+    const ranges=[];
+    for(let s=1;s<=N_SEM;s++){
+      for(let e=0;e<N_ETU;e++){
+        CRITERES.forEach((c,ci)=>{
+          c.cases.forEach((_,ki)=>{
+            const col=colPourCase(s,ci,ki);
+            const row=ROW_START+e*2;
+            ranges.push(`${SHEET_NAME}!${colLettre(col)}${row}`);
+          });
+        });
+      }
+    }
 
-async function synchroniser() {
-  if (!accessToken) { showToast("⚠️ Non connecté"); return; }
+    setLoading("Lecture des données...", 30);
 
-  const btns = document.querySelectorAll('.btn-sync');
-  btns.forEach(b => { b.disabled=true; b.innerHTML='<span class="loader"></span>'; });
-
-  try {
-    // Construire les données à envoyer
-    const data = [];
-    for (let etuIdx=0; etuIdx<N_ETU; etuIdx++) {
-      for (let ci=0; ci<CRITERES.length; ci++) {
-        const crit = CRITERES[ci];
-        for (let ki=0; ki<crit.cases.length; ki++) {
-          const val = getVal(semaine, etuIdx, ci, ki);
-          const ref = cellRef(semaine, etuIdx, ci, ki);
-          data.push({ range: ref, values: [[val]] });
+    // Découper en lots de 500 ranges (limite API)
+    const BATCH=500;
+    let allValues=[];
+    for(let i=0;i<ranges.length;i+=BATCH){
+      const lot=ranges.slice(i,i+BATCH);
+      const pct=30+Math.round((i/ranges.length)*60);
+      setLoading(`Chargement... ${pct}%`, pct);
+      const params=lot.map(r=>`ranges=${encodeURIComponent(r)}`).join('&');
+      const resp=await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}&valueRenderOption=UNFORMATTED_VALUE`,
+        {headers:{'Authorization':`Bearer ${accessToken}`}}
+      );
+      if(!resp.ok){
+        // Token expiré ?
+        if(resp.status===401){
+          try{ localStorage.removeItem(TOKEN_KEY); }catch(e){}
+          accessToken=null;
+          aller('login');
+          showToast("Session expirée, reconnectez-vous");
+          return false;
         }
+        throw new Error("Erreur API "+resp.status);
+      }
+      const data=await resp.json();
+      if(data.valueRanges) allValues=allValues.concat(data.valueRanges);
+    }
+
+    setLoading("Traitement des données...", 90);
+
+    // Remplir donnees
+    initDonnees();
+    let idx=0;
+    for(let s=1;s<=N_SEM;s++){
+      for(let e=0;e<N_ETU;e++){
+        CRITERES.forEach((c,ci)=>{
+          c.cases.forEach((_,ki)=>{
+            if(idx<allValues.length){
+              const vr=allValues[idx];
+              const val=vr&&vr.values&&vr.values[0]&&vr.values[0][0];
+              donnees[s][e][ci][ki]=(val===true||val==="TRUE"||val===1||val==="1");
+            }
+            idx++;
+          });
+        });
       }
     }
 
-    const body = { valueInputOption: "RAW", data };
-    const resp = await fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,
-      {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(body)
-      }
-    );
+    sauvegarderLocal();
+    setLoading("Prêt !", 100);
+    await new Promise(r=>setTimeout(r,500));
+    return true;
 
-    if (resp.ok) {
-      showToast("✅ Synchronisé avec Google Sheets !");
-    } else {
-      const err = await resp.json();
-      showToast("❌ Erreur : " + (err.error?.message || "inconnue"));
-    }
-  } catch(e) {
-    showToast("❌ Erreur réseau");
+  }catch(err){
+    console.error(err);
+    showToast("⚠️ Erreur chargement, données locales utilisées");
+    return false;
   }
-
-  btns.forEach(b => { b.disabled=false; b.innerHTML='<span>↑</span> Sync'; });
 }
 
-// ── ÉCRAN ACCUEIL ─────────────────────────────────────────────────────────────
-function initAccueil() {
-  // Grille semaines
-  const grid = document.getElementById('sem-grid');
-  grid.innerHTML = '';
-  for (let s=1; s<=10; s++) {
-    const btn = document.createElement('div');
-    btn.className = 'sem-btn' + (s===semaine?' active':'');
-    btn.innerHTML = `<div class="sem-num">${s}</div><div class="sem-lbl">sem.</div>`;
-    btn.onclick = () => { semaine=s; initAccueil(); showToast(`Semaine ${s} sélectionnée`); };
+function setLoading(msg, pct){
+  document.getElementById('loading-sub').textContent=msg;
+  document.getElementById('loading-bar').style.width=pct+'%';
+}
+
+// ── SYNC VERS SHEETS ──────────────────────────────────────
+async function synchroniserVersSheets(){
+  if(!accessToken){ showToast("⚠️ Non connecté"); return; }
+  const btns=document.querySelectorAll('.btn-sync');
+  btns.forEach(b=>{ b.disabled=true; b.innerHTML='<span class="loader"></span>'; });
+  try{
+    const data=[];
+    for(let s=1;s<=N_SEM;s++){
+      for(let e=0;e<N_ETU;e++){
+        CRITERES.forEach((c,ci)=>{
+          c.cases.forEach((_,ki)=>{
+            const col=colPourCase(s,ci,ki);
+            const row=ROW_START+e*2;
+            data.push({range:`${SHEET_NAME}!${colLettre(col)}${row}`,values:[[getVal(s,e,ci,ki)]]});
+          });
+        });
+      }
+    }
+    // Envoyer en lots de 500
+    const BATCH=500;
+    for(let i=0;i<data.length;i+=BATCH){
+      const lot=data.slice(i,i+BATCH);
+      const resp=await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,
+        {method:'POST',headers:{'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json'},
+         body:JSON.stringify({valueInputOption:"RAW",data:lot})}
+      );
+      if(!resp.ok) throw new Error("Erreur sync "+resp.status);
+    }
+    showToast("✅ Synchronisé avec Google Sheets !");
+  }catch(e){
+    showToast("❌ Erreur : "+e.message);
+  }
+  btns.forEach(b=>{ b.disabled=false; b.innerHTML='↑ Sync'; });
+}
+
+// ── ACCUEIL ───────────────────────────────────────────────
+function initAccueil(){
+  const grid=document.getElementById('sem-grid');
+  grid.innerHTML='';
+  for(let s=1;s<=N_SEM;s++){
+    const btn=document.createElement('div');
+    btn.className='sem-btn'+(s===semaine?' active':'');
+    btn.innerHTML=`<div class="sem-num">${s}</div><div class="sem-lbl">sem.</div>`;
+    btn.onclick=()=>{ semaine=s; initAccueil(); showToast(`Semaine ${s}`); };
     grid.appendChild(btn);
   }
-  document.getElementById('stat-semaine').textContent = semaine;
-  document.getElementById('stat-moy').textContent = scoreSemaine(semaine);
+  document.getElementById('stat-semaine').textContent=semaine;
+  document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
 }
 
-// ── ÉCRAN LISTE ───────────────────────────────────────────────────────────────
-function ouvrirListe() {
-  document.getElementById('liste-sem-label').textContent = `Semaine ${semaine}`;
-  document.getElementById('search-input').value = '';
+// ── LISTE ─────────────────────────────────────────────────
+function ouvrirListe(){
+  document.getElementById('liste-sem-label').textContent=`Semaine ${semaine}`;
+  document.getElementById('search-input').value='';
   afficherListeEtudiants(PRENOMS);
   aller('liste');
 }
-
-function filtrerEtudiants() {
-  const q = document.getElementById('search-input').value.toLowerCase();
-  const filtres = PRENOMS.filter(p => p.toLowerCase().includes(q));
-  afficherListeEtudiants(filtres);
+function filtrerEtudiants(){
+  const q=document.getElementById('search-input').value.toLowerCase();
+  afficherListeEtudiants(PRENOMS.filter(p=>p.toLowerCase().includes(q)));
 }
-
-function afficherListeEtudiants(liste) {
-  const container = document.getElementById('etudiant-list');
-  container.innerHTML = '';
-  liste.forEach(prenom => {
-    const idx = PRENOMS.indexOf(prenom);
-    const score = scoreEtudiant(semaine, idx);
-    const div = document.createElement('div');
-    div.className = 'etudiant-item';
-    const color = avatarColor(idx);
-    const scoreColor = score >= 1.5 ? '#3ecf8e' : score >= 0.5 ? '#f5c842' : '#f87171';
-    div.innerHTML = `
-      <div class="etudiant-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
-      <div class="etudiant-info">
-        <div class="etudiant-name">${prenom}</div>
-        <div class="etudiant-score">Score total S${semaine} : ${score.toFixed(2)} pts</div>
-      </div>
-      <div class="etudiant-badge" style="background:${scoreColor}22;color:${scoreColor}">${score.toFixed(1)}</div>
-    `;
-    div.onclick = () => ouvrirSaisie(idx);
-    container.appendChild(div);
+function afficherListeEtudiants(liste){
+  const c=document.getElementById('etudiant-list'); c.innerHTML='';
+  liste.forEach(prenom=>{
+    const idx=PRENOMS.indexOf(prenom);
+    const score=scoreEtudiant(semaine,idx);
+    const color=avatarColor(idx);
+    const sc=score>=1.5?'#3ecf8e':score>=0.5?'#f5c842':'#f87171';
+    const div=document.createElement('div'); div.className='etudiant-item';
+    div.innerHTML=`<div class="etudiant-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
+      <div style="flex:1"><div class="etudiant-name">${prenom}</div><div class="etudiant-score">Score S${semaine} : ${score.toFixed(2)} pts</div></div>
+      <div class="etudiant-badge" style="background:${sc}22;color:${sc}">${score.toFixed(1)}</div>`;
+    div.onclick=()=>ouvrirSaisie(idx);
+    c.appendChild(div);
   });
 }
 
-// ── ÉCRAN SAISIE ÉTUDIANT ─────────────────────────────────────────────────────
-function ouvrirSaisie(idx) {
-  etudiantIdx = idx;
-  afficherSaisie();
-  aller('saisie');
-}
+// ── SAISIE ────────────────────────────────────────────────
+function ouvrirSaisie(idx){ etudiantIdx=idx; afficherSaisie(); aller('saisie'); }
+function afficherSaisie(){
+  const prenom=PRENOMS[etudiantIdx];
+  const color=avatarColor(etudiantIdx);
+  document.getElementById('saisie-header-name').textContent=prenom;
+  document.getElementById('saisie-header-sem').textContent=`Semaine ${semaine}`;
+  document.getElementById('saisie-name').textContent=prenom;
+  document.getElementById('saisie-sem').textContent=`Semaine ${semaine} · ${etudiantIdx+1}/${N_ETU}`;
+  document.getElementById('saisie-avatar').textContent=initiales(prenom);
+  document.getElementById('saisie-avatar').style.cssText=`background:${color}22;color:${color}`;
+  document.getElementById('saisie-score').textContent=scoreEtudiant(semaine,etudiantIdx).toFixed(2);
+  document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
 
-function afficherSaisie() {
-  const prenom = PRENOMS[etudiantIdx];
-  const color  = avatarColor(etudiantIdx);
-
-  document.getElementById('saisie-header-name').textContent = prenom;
-  document.getElementById('saisie-header-sem').textContent  = `Semaine ${semaine}`;
-  document.getElementById('saisie-name').textContent = prenom;
-  document.getElementById('saisie-sem').textContent  = `Semaine ${semaine} · Étudiant ${etudiantIdx+1}/${N_ETU}`;
-  document.getElementById('saisie-avatar').textContent = initiales(prenom);
-  document.getElementById('saisie-avatar').style.background = color+'22';
-  document.getElementById('saisie-avatar').style.color = color;
-
-  majScoreSaisie();
-
-  const container = document.getElementById('criteres-list');
-  container.innerHTML = '';
-
-  CRITERES.forEach((crit, ci) => {
-    const card = document.createElement('div');
-    card.className = 'critere-card';
-    card.id = `critere-card-${ci}`;
-
-    const ptsTxt = crit.cases.map(c => (c.pts>0?'+':'')+c.pts).join(' / ');
-
-    card.innerHTML = `
-      <div class="critere-header">
-        <div class="critere-dot" style="background:${crit.couleur}"></div>
-        <div class="critere-name">${crit.nom}</div>
-        <div class="critere-pts">${ptsTxt} pt</div>
-      </div>
-      <div class="critere-cases" id="cases-${ci}"></div>
-    `;
+  const container=document.getElementById('criteres-list'); container.innerHTML='';
+  CRITERES.forEach((crit,ci)=>{
+    const ptsTxt=crit.cases.map(c=>(c.pts>0?'+':'')+c.pts).join(' / ');
+    const card=document.createElement('div'); card.className='critere-card';
+    card.innerHTML=`<div class="critere-header">
+      <div class="critere-dot" style="background:${crit.couleur}"></div>
+      <div class="critere-name">${crit.nom}</div>
+      <div class="critere-pts">${ptsTxt} pt</div>
+    </div><div class="critere-cases" id="cc-${ci}"></div>`;
     container.appendChild(card);
+    const casesDiv=document.getElementById(`cc-${ci}`);
 
-    const casesDiv = document.getElementById(`cases-${ci}`);
-
-    // Bouton N/A si plusieurs cases
-    if (crit.cases.length > 1) {
-      const naBtn = document.createElement('button');
-      naBtn.className = 'case-btn na-btn';
-      naBtn.textContent = '— N/A';
-      const toutDecoché = crit.cases.every((_,ki) => !getVal(semaine,etudiantIdx,ci,ki));
-      if (toutDecoché) naBtn.classList.add('checked');
-      naBtn.onclick = () => {
-        crit.cases.forEach((_,ki) => setVal(semaine,etudiantIdx,ci,ki,false));
-        afficherSaisie();
-      };
+    if(crit.cases.length>1){
+      const naBtn=document.createElement('button');
+      naBtn.className='case-btn na-btn'+(crit.cases.every((_,ki)=>!getVal(semaine,etudiantIdx,ci,ki))?' checked':'');
+      naBtn.textContent='— N/A';
+      naBtn.onclick=()=>{ crit.cases.forEach((_,ki)=>setVal(semaine,etudiantIdx,ci,ki,false)); afficherSaisie(); };
       casesDiv.appendChild(naBtn);
     }
 
-    crit.cases.forEach((cas, ki) => {
-      const btn = document.createElement('button');
-      btn.className = 'case-btn';
-      const checked = getVal(semaine, etudiantIdx, ci, ki);
-      if (checked) {
-        btn.classList.add('checked');
-        btn.style.background = crit.couleur + (cas.pts < 0 ? '44' : '33');
-        btn.style.borderColor = crit.couleur;
-        btn.style.color = crit.couleur;
-      }
-      btn.textContent = cas.lbl;
-      btn.onclick = () => {
-        const newVal = !getVal(semaine, etudiantIdx, ci, ki);
-        // Exclusivité pour tenue et TM
-        if (crit.cases.length > 1 && newVal) {
-          crit.cases.forEach((_,k2) => { if(k2!==ki) setVal(semaine,etudiantIdx,ci,k2,false); });
-        }
-        setVal(semaine, etudiantIdx, ci, ki, newVal);
+    crit.cases.forEach((cas,ki)=>{
+      const btn=document.createElement('button');
+      const checked=getVal(semaine,etudiantIdx,ci,ki);
+      btn.className='case-btn'+(checked?' checked':'');
+      btn.textContent=cas.lbl;
+      if(checked){ btn.style.cssText=`background:${crit.couleur}33;border-color:${crit.couleur};color:${crit.couleur}`; }
+      btn.onclick=()=>{
+        const nv=!getVal(semaine,etudiantIdx,ci,ki);
+        if(crit.cases.length>1&&nv) crit.cases.forEach((_,k2)=>{ if(k2!==ki) setVal(semaine,etudiantIdx,ci,k2,false); });
+        setVal(semaine,etudiantIdx,ci,ki,nv);
         afficherSaisie();
-        majScoreSaisie();
       };
       casesDiv.appendChild(btn);
     });
   });
 }
 
-function majScoreSaisie() {
-  const score = scoreEtudiant(semaine, etudiantIdx);
-  document.getElementById('saisie-score').textContent = score.toFixed(2);
-  document.getElementById('stat-moy').textContent = scoreSemaine(semaine);
-}
+function etudiantSuivant(){ if(etudiantIdx<N_ETU-1){ etudiantIdx++; afficherSaisie(); } else showToast("Dernier étudiant !"); }
+function etudiantPrecedent(){ if(etudiantIdx>0){ etudiantIdx--; afficherSaisie(); } else showToast("Premier étudiant !"); }
 
-function etudiantSuivant() {
-  if (etudiantIdx < N_ETU-1) { etudiantIdx++; afficherSaisie(); }
-  else showToast("Dernier étudiant atteint !");
+// ── RAPIDE ────────────────────────────────────────────────
+function ouvrirRapide(){
+  document.getElementById('rapide-sem-label').textContent=`Semaine ${semaine}`;
+  critereRapide=0;
+  afficherTabsCriteres(); afficherRapide(); aller('rapide');
 }
-function etudiantPrecedent() {
-  if (etudiantIdx > 0) { etudiantIdx--; afficherSaisie(); }
-  else showToast("Premier étudiant !");
-}
-
-// ── ÉCRAN SAISIE RAPIDE ───────────────────────────────────────────────────────
-function ouvrirRapide() {
-  document.getElementById('rapide-sem-label').textContent = `Semaine ${semaine}`;
-  critereRapide = 0;
-  afficherTabsCriteres();
-  afficherRapide();
-  aller('rapide');
-}
-
-function afficherTabsCriteres() {
-  const tabs = document.getElementById('critere-tabs');
-  tabs.innerHTML = '';
-  CRITERES.forEach((crit, ci) => {
-    const tab = document.createElement('div');
-    tab.className = 'critere-tab' + (ci===critereRapide?' active':'');
-    if (ci===critereRapide) tab.style.background = crit.couleur;
-    tab.textContent = crit.nom;
-    tab.onclick = () => { critereRapide=ci; afficherTabsCriteres(); afficherRapide(); };
+function afficherTabsCriteres(){
+  const tabs=document.getElementById('critere-tabs'); tabs.innerHTML='';
+  CRITERES.forEach((crit,ci)=>{
+    const tab=document.createElement('div');
+    tab.className='critere-tab'+(ci===critereRapide?' active':'');
+    if(ci===critereRapide) tab.style.cssText=`background:${crit.couleur};border-color:${crit.couleur}`;
+    tab.textContent=crit.nom;
+    tab.onclick=()=>{ critereRapide=ci; afficherTabsCriteres(); afficherRapide(); };
     tabs.appendChild(tab);
   });
 }
-
-function afficherRapide() {
-  const crit = CRITERES[critereRapide];
-  const container = document.getElementById('rapide-list');
-  container.innerHTML = '';
-
-  PRENOMS.forEach((prenom, idx) => {
-    const div = document.createElement('div');
-    div.className = 'rapide-item';
-    const color = avatarColor(idx);
-
-    let casesHTML = '';
-    crit.cases.forEach((cas, ki) => {
-      const checked = getVal(semaine, idx, critereRapide, ki);
-      casesHTML += `<div class="rapide-case${checked?' checked':''}"
+function afficherRapide(){
+  const crit=CRITERES[critereRapide];
+  const container=document.getElementById('rapide-list'); container.innerHTML='';
+  PRENOMS.forEach((prenom,idx)=>{
+    const div=document.createElement('div'); div.className='rapide-item';
+    const color=avatarColor(idx);
+    let casesHTML='';
+    crit.cases.forEach((cas,ki)=>{
+      const checked=getVal(semaine,idx,critereRapide,ki);
+      casesHTML+=`<div class="rapide-case${checked?' checked':''}"
         style="${checked?`background:${crit.couleur}33;border-color:${crit.couleur};color:${crit.couleur}`:'color:var(--text2)'}"
-        onclick="toggleRapide(${idx},${critereRapide},${ki})"
-        title="${cas.lbl}">
-        ${checked?'✓':'○'}
-      </div>`;
+        onclick="toggleRapide(${idx},${critereRapide},${ki})">${checked?'✓':'○'}</div>`;
     });
-
-    div.innerHTML = `
-      <div class="rapide-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
+    div.innerHTML=`<div class="rapide-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
       <div class="rapide-name">${prenom}</div>
-      <div class="rapide-cases">${casesHTML}</div>
-    `;
+      <div class="rapide-cases">${casesHTML}</div>`;
     container.appendChild(div);
   });
 }
-
-function toggleRapide(etuIdx, ci, ki) {
-  const crit = CRITERES[ci];
-  const newVal = !getVal(semaine, etuIdx, ci, ki);
-  if (crit.cases.length > 1 && newVal) {
-    crit.cases.forEach((_,k2) => { if(k2!==ki) setVal(semaine,etuIdx,ci,k2,false); });
-  }
-  setVal(semaine, etuIdx, ci, ki, newVal);
+function toggleRapide(e,ci,ki){
+  const crit=CRITERES[ci];
+  const nv=!getVal(semaine,e,ci,ki);
+  if(crit.cases.length>1&&nv) crit.cases.forEach((_,k2)=>{ if(k2!==ki) setVal(semaine,e,ci,k2,false); });
+  setVal(semaine,e,ci,ki,nv);
   afficherRapide();
 }
 
-function toutCocherRapide() {
-  const crit = CRITERES[critereRapide];
-  const ki = 0; // première case (positive)
-  // Vérifier si tout est déjà coché
-  const toutCoche = PRENOMS.every((_,idx) => getVal(semaine,idx,critereRapide,0));
-  PRENOMS.forEach((_,idx) => {
-    if (crit.cases.length > 1) {
-      crit.cases.forEach((_,k2) => setVal(semaine,idx,critereRapide,k2,false));
-    }
-    if (!toutCoche) setVal(semaine,idx,critereRapide,0,true);
+// mode : 0 = tout cocher (case 0), -1 = tout décocher
+function toutCocherRapide(mode){
+  const crit=CRITERES[critereRapide];
+  PRENOMS.forEach((_,idx)=>{
+    crit.cases.forEach((_,ki)=>setVal(semaine,idx,critereRapide,ki,false));
+    if(mode===0) setVal(semaine,idx,critereRapide,0,true);
   });
   afficherRapide();
-  showToast(toutCoche ? "☐ Tout décoché" : "✅ Tout coché");
+  showToast(mode===0?"✅ Tous cochés":"☐ Tous décochés");
 }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-window.onload = function() {
-  if (verifierToken()) {
-    showToast("✅ Connecté !");
+// ── INIT ──────────────────────────────────────────────────
+window.onload = async function(){
+  initDonnees();
+
+  if(verifierToken()){
+    // Essayer de charger depuis Sheets, sinon utiliser local
+    const ok=await chargerDepuisSheets();
+    if(!ok){
+      chargerLocal();
+      initDonnees();
+    }
     initAccueil();
     aller('home');
+    showToast("✅ Données chargées !");
+  } else {
+    // Essayer de charger les données locales sans connexion
+    chargerLocal();
+    aller('login');
   }
 };
 </script>
