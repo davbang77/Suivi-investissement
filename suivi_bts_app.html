@@ -19,16 +19,12 @@
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 .screen{display:none;min-height:100vh;flex-direction:column}
 .screen.active{display:flex}
-
-/* LOGIN */
 #screen-login{align-items:center;justify-content:center;background:linear-gradient(135deg,#0f1a2e,#1a2744);padding:24px}
 .login-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:36px 28px;width:100%;max-width:380px;text-align:center}
 .login-logo{font-size:48px;margin-bottom:12px}
 .login-title{font-size:22px;font-weight:700;margin-bottom:4px}
 .login-sub{font-size:13px;color:var(--text2);margin-bottom:28px}
 .btn-login{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer}
-
-/* LOADING */
 #screen-loading{align-items:center;justify-content:center;background:var(--bg)}
 .loading-card{text-align:center;padding:40px}
 .loading-spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
@@ -37,20 +33,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .loading-progress{margin-top:16px;background:var(--bg3);border-radius:10px;height:6px;width:200px;margin:16px auto 0}
 .loading-bar{height:6px;background:var(--accent);border-radius:10px;width:0%;transition:width .3s}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* HEADER */
 .app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
 .btn-back{background:var(--bg3);border:none;border-radius:10px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:18px;cursor:pointer;flex-shrink:0}
 .header-title{font-size:16px;font-weight:600;flex:1}
 .header-sub{font-size:11px;color:var(--text2)}
 .btn-sync{background:var(--green);border:none;border-radius:10px;padding:8px 12px;color:#0f1a2e;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0}
 .btn-sync:disabled{opacity:.5;cursor:not-allowed}
-
-/* ACCUEIL */
 .home-hero{background:linear-gradient(135deg,var(--bg2),var(--bg3));padding:20px 16px 24px;border-bottom:1px solid var(--border)}
 .home-welcome{font-size:13px;color:var(--text2);margin-bottom:4px}
 .home-title{font-size:24px;font-weight:700}
-.home-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px}
+.classe-btns{display:flex;gap:8px;margin-top:14px}
+.classe-btn{flex:1;padding:10px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;border:2px solid var(--border);background:var(--bg3);color:var(--text2)}
+.classe-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.home-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}
 .stat-card{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:var(--radius);padding:12px;text-align:center}
 .stat-num{font-size:22px;font-weight:700;color:var(--accent)}
 .stat-lbl{font-size:11px;color:var(--text2);margin-top:2px}
@@ -68,21 +63,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .mode-icon{font-size:28px;margin-bottom:8px}
 .mode-name{font-size:14px;font-weight:600}
 .mode-desc{font-size:11px;color:var(--text2);margin-top:4px;line-height:1.4}
-
-/* LISTE */
 .search-bar{padding:12px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
 .search-input{width:100%;padding:10px 14px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px}
 .search-input::placeholder{color:var(--text2)}
 .search-input:focus{outline:none;border-color:var(--accent)}
 .etudiant-list{overflow-y:auto;flex:1}
-.etudiant-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.etudiant-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer}
 .etudiant-item:active{background:var(--bg2)}
 .etudiant-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
 .etudiant-name{font-size:15px;font-weight:500}
 .etudiant-score{font-size:12px;color:var(--text2);margin-top:2px}
 .etudiant-badge{font-size:13px;font-weight:700;padding:4px 10px;border-radius:20px}
-
-/* SAISIE */
 .saisie-student-header{background:var(--bg2);padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
 .saisie-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0}
 .saisie-name{font-size:17px;font-weight:700}
@@ -104,8 +95,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .nav-btns{display:flex;gap:10px;padding:12px 16px;flex-shrink:0}
 .btn-prev{flex:1;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;cursor:pointer}
 .btn-next{flex:1;padding:12px;background:var(--accent);border:none;border-radius:var(--radius);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer}
-
-/* RAPIDE */
 .rapide-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px}
 .critere-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
 .critere-tabs::-webkit-scrollbar{display:none}
@@ -121,8 +110,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .rapide-case{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .12s}
 .rapide-case:active{transform:scale(.9)}
 .rapide-case.checked{border-color:transparent}
-
-/* TOAST */
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 20px;font-size:14px;font-weight:500;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;z-index:999}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .loader{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
@@ -130,7 +117,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-card">
     <div class="login-logo">📊</div>
@@ -141,7 +127,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- CHARGEMENT -->
 <div id="screen-loading" class="screen">
   <div class="loading-card">
     <div class="loading-spinner"></div>
@@ -151,23 +136,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- ACCUEIL -->
 <div id="screen-home" class="screen">
   <div class="app-header">
-    <div style="flex:1">
-      <div class="header-title">📊 Suivi BTS MCO</div>
-      <div class="header-sub">Lycée Blaise Pascal</div>
-    </div>
+    <div style="flex:1"><div class="header-title">📊 Suivi BTS MCO</div><div class="header-sub">Lycée Blaise Pascal</div></div>
     <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
   <div class="home-hero">
     <div class="home-welcome">Bonjour 👋</div>
     <div class="home-title">Note d'investissement</div>
-    <div style="display:flex;gap:8px;margin-top:14px">
-      <button id="btn-bts1" onclick="changerClasse('BTS1')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--accent);background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer">BTS 1</button>
-      <button id="btn-bts2" onclick="changerClasse('BTS2')" style="flex:1;padding:10px;border-radius:10px;border:2px solid var(--border);background:var(--bg3);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer">BTS 2</button>
+    <div class="classe-btns">
+      <button id="btn-bts1" class="classe-btn active" onclick="changerClasse('BTS1')">BTS 1</button>
+      <button id="btn-bts2" class="classe-btn" onclick="changerClasse('BTS2')">BTS 2</button>
     </div>
-    <div class="home-stats" style="margin-top:12px">
+    <div class="home-stats">
       <div class="stat-card"><div class="stat-num">40</div><div class="stat-lbl">Étudiants</div></div>
       <div class="stat-card"><div class="stat-num" id="stat-semaine">—</div><div class="stat-lbl">Semaine</div></div>
       <div class="stat-card"><div class="stat-num" id="stat-moy">—</div><div class="stat-lbl">Moy. classe</div></div>
@@ -190,11 +171,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- LISTE -->
 <div id="screen-liste" class="screen">
   <div class="app-header">
     <button class="btn-back" onclick="aller('home')">←</button>
-    <div style="flex:1"><div class="header-title">Étudiants</div><div class="header-sub" id="liste-sem-label">Semaine —</div></div>
+    <div style="flex:1"><div class="header-title" id="liste-classe-label">—</div><div class="header-sub" id="liste-sem-label">Semaine —</div></div>
     <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
   <div class="search-bar">
@@ -203,7 +183,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="etudiant-list" id="etudiant-list"></div>
 </div>
 
-<!-- SAISIE -->
 <div id="screen-saisie" class="screen">
   <div class="app-header">
     <button class="btn-back" onclick="afficherListeEtudiants(PRENOMS);aller('liste')">←</button>
@@ -228,7 +207,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   </div>
 </div>
 
-<!-- RAPIDE -->
 <div id="screen-rapide" class="screen">
   <div class="app-header">
     <button class="btn-back" onclick="aller('home')">←</button>
@@ -250,13 +228,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <script>
 const CLIENT_ID  = "182320571341-erkkksqh4epeetgmcuebeobhhc6sel87.apps.googleusercontent.com";
 const SHEET_ID   = "18eqFQg67E0aGq26S-ApqQoOd4cbx1THYbPp3qZ6xqMg";
-let CLASSE = "BTS1"; // BTS1 ou BTS2
-function sheetName(){ return `Suivi Global ${CLASSE}`; }
 const SCOPES     = "https://www.googleapis.com/auth/spreadsheets";
-const STORAGE_KEY_BTS1 = "suivi_bts_data_BTS1";
-const STORAGE_KEY_BTS2 = "suivi_bts_data_BTS2";
-function storageKey(){ return CLASSE==="BTS1" ? STORAGE_KEY_BTS1 : STORAGE_KEY_BTS2; }
-const TOKEN_KEY   = "suivi_bts_token";
+const TOKEN_KEY  = "suivi_bts_token";
+
+// ⚠️ Noms exacts des onglets Google Sheets
+function sheetName(){ return `Suivi investissement ${CLASSE}`; }
 
 const PRENOMS = ["Alice","Baptiste","Camille","Dylan","Emma","Félix","Gaëlle","Hugo",
   "Inès","Jules","Karine","Léo","Manon","Nathan","Océane","Pierre",
@@ -265,126 +241,96 @@ const PRENOMS = ["Alice","Baptiste","Camille","Dylan","Emma","Félix","Gaëlle",
   "Gabriel","Hannah","Ilan","Julie","Kevin","Laura","Maxime","Nina"];
 
 const CRITERES = [
-  {id:"comp",  nom:"Comportement",   couleur:"#3ecf8e", cases:[{lbl:"✓ Bien",    pts:0.5,  type:"bool"}]},
-  {id:"auto",  nom:"Autonomie",      couleur:"#f5c842", cases:[{lbl:"✓ Bien",    pts:0.5,  type:"bool"}]},
-  {id:"parti", nom:"Participation",  couleur:"#4f9cf9", cases:[{lbl:"✓ Part.",   pts:0.25, type:"bool"}]},
-  {id:"qcm",   nom:"QCM",            couleur:"#a78bfa", cases:[{lbl:"✓ Fait",    pts:0.3,  type:"bool"}]},
+  {id:"comp",  nom:"Comportement",   couleur:"#3ecf8e", cases:[{lbl:"✓ Bien",    pts:0.5}]},
+  {id:"auto",  nom:"Autonomie",      couleur:"#f5c842", cases:[{lbl:"✓ Bien",    pts:0.5}]},
+  {id:"parti", nom:"Participation",  couleur:"#4f9cf9", cases:[{lbl:"✓ Part.",   pts:0.25}]},
+  {id:"qcm",   nom:"QCM",            couleur:"#a78bfa", cases:[{lbl:"✓ Fait",    pts:0.3}]},
   {id:"tenue", nom:"Tenue",          couleur:"#fb923c", cases:[
-    {lbl:"✓ Bien",     pts:0.25,  type:"bien"},
-    {lbl:"✗ Jogging",  pts:-0.5,  type:"jogging"}
+    {lbl:"✓ Bien",     pts:0.25},
+    {lbl:"✗ Jogging",  pts:-0.5}
   ]},
-  {id:"tm", nom:"Travail Maison",    couleur:"#f87171", cases:[
-    {lbl:"✓ Fait",     pts:0.7,   type:"fait"},
-    {lbl:"✗ Non fait", pts:-1.0,  type:"nf"}
+  {id:"tm",    nom:"Travail Maison", couleur:"#f87171", cases:[
+    {lbl:"✓ Fait",     pts:0.7},
+    {lbl:"✗ Non fait", pts:-1.0}
   ]},
 ];
 
-// Colonnes sheets : 8 cases + 1 total = 9 colonnes par semaine
 const N_COLS_SEM = 9;
-const COL_OFFSET = 3; // 1-based : col 3 = C
+const COL_OFFSET = 3;
 const ROW_START  = 7;
 const N_ETU      = 40;
 const N_SEM      = 10;
 
 let accessToken  = null;
+let CLASSE       = "BTS1";
 let semaine      = 1;
 let etudiantIdx  = 0;
 let critereRapide= 0;
-// Structure : donnees[sem][etuIdx][critIdx][caseIdx] = bool
-let donnees = {};
+// Données séparées par classe
+let donneesParClasse = { BTS1:{}, BTS2:{} };
+function donnees(){ return donneesParClasse[CLASSE]; }
+function storageKey(){ return `suivi_bts_data_${CLASSE}`; }
 
-const COLORS = ["#3ecf8e","#f5c842","#4f9cf9","#a78bfa","#fb923c","#f87171","#60a5fa","#34d399","#fbbf24","#e879f9"];
-function avatarColor(i){ return COLORS[i%COLORS.length]; }
-function initiales(p){ return p.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2); }
-function showToast(msg,d=2500){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),d); }
-function aller(s){ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active')); document.getElementById('screen-'+s).classList.add('active'); }
+const COLORS=["#3ecf8e","#f5c842","#4f9cf9","#a78bfa","#fb923c","#f87171","#60a5fa","#34d399","#fbbf24","#e879f9"];
+function avatarColor(i){return COLORS[i%COLORS.length];}
+function initiales(p){return p.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+function showToast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
+function aller(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('screen-'+s).classList.add('active');}
 
-// ── DONNÉES ───────────────────────────────────────────────
 function initDonnees(){
+  const d=donneesParClasse[CLASSE];
   for(let s=1;s<=N_SEM;s++){
-    if(!donnees[s]) donnees[s]={};
+    if(!d[s])d[s]={};
     for(let e=0;e<N_ETU;e++){
-      if(!donnees[s][e]) donnees[s][e]={};
+      if(!d[s][e])d[s][e]={};
       CRITERES.forEach((c,ci)=>{
-        if(!donnees[s][e][ci]) donnees[s][e][ci]={};
-        c.cases.forEach((_,ki)=>{ if(donnees[s][e][ci][ki]===undefined) donnees[s][e][ci][ki]=false; });
+        if(!d[s][e][ci])d[s][e][ci]={};
+        c.cases.forEach((_,ki)=>{if(d[s][e][ci][ki]===undefined)d[s][e][ci][ki]=false;});
       });
     }
   }
 }
 
-function getVal(s,e,ci,ki){ try{ return donnees[s][e][ci][ki]||false; }catch(err){ return false; } }
-function setVal(s,e,ci,ki,v){ try{ donnees[s][e][ci][ki]=v; }catch(err){} sauvegarderLocal(); }
-
-function sauvegarderLocal(){
-  try{ localStorage.setItem(storageKey(), JSON.stringify(donnees)); }catch(e){}
+function getVal(s,e,ci,ki){try{return donneesParClasse[CLASSE][s][e][ci][ki]||false;}catch(err){return false;}}
+function setVal(s,e,ci,ki,v){
+  try{donneesParClasse[CLASSE][s][e][ci][ki]=v;}catch(err){}
+  sauvegarderLocal();
 }
+function sauvegarderLocal(){try{localStorage.setItem(storageKey(),JSON.stringify(donneesParClasse[CLASSE]));}catch(e){}}
 function chargerLocal(){
-  try{
-    const d=localStorage.getItem(storageKey());
-    if(d){ donnees=JSON.parse(d); return true; }
-  }catch(e){}
+  try{const d=localStorage.getItem(storageKey());if(d){donneesParClasse[CLASSE]=JSON.parse(d);return true;}}catch(e){}
   return false;
 }
 
-function scoreEtudiant(s,e){
-  let total=0;
-  CRITERES.forEach((c,ci)=>{ c.cases.forEach((cas,ki)=>{ if(getVal(s,e,ci,ki)) total+=cas.pts; }); });
-  return total;
-}
-function scoreSemaine(s){
-  let sum=0; for(let i=0;i<N_ETU;i++) sum+=scoreEtudiant(s,i);
-  return (sum/N_ETU).toFixed(2);
-}
+function scoreEtudiant(s,e){let t=0;CRITERES.forEach((c,ci)=>{c.cases.forEach((cas,ki)=>{if(getVal(s,e,ci,ki))t+=cas.pts;});});return t;}
+function scoreSemaine(s){let sum=0;for(let i=0;i<N_ETU;i++)sum+=scoreEtudiant(s,i);return(sum/N_ETU).toFixed(2);}
 
-// ── COLONNES SHEETS ───────────────────────────────────────
-function colLettre(idx){
-  let r="";
-  while(idx>0){ idx--; r=String.fromCharCode(65+idx%26)+r; idx=Math.floor(idx/26); }
-  return r;
-}
-function semColStart(s){ return COL_OFFSET+(s-1)*N_COLS_SEM; }
+function colLettre(idx){let r="";while(idx>0){idx--;r=String.fromCharCode(65+idx%26)+r;idx=Math.floor(idx/26);}return r;}
+function semColStart(s){return COL_OFFSET+(s-1)*N_COLS_SEM;}
+function colPourCase(s,ci,ki){let col=semColStart(s);for(let c=0;c<ci;c++)col+=CRITERES[c].cases.length;col+=ki;return col;}
 
-// Retourne la colonne (1-based) pour un critère/case donné dans une semaine
-function colPourCase(s,ci,ki){
-  let col=semColStart(s);
-  for(let c=0;c<ci;c++) col+=CRITERES[c].cases.length;
-  col+=ki;
-  return col;
-}
-
-// ── AUTH ──────────────────────────────────────────────────
 function connecterGoogle(){
   const url=window.location.href.split('?')[0].split('#')[0];
   window.location.href=`https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(url)}&response_type=token&scope=${encodeURIComponent(SCOPES)}&prompt=consent`;
 }
-
 function verifierToken(){
-  // 1. Vérifier le hash (retour OAuth)
   const hash=window.location.hash;
   if(hash&&hash.includes('access_token')){
     const p=new URLSearchParams(hash.substring(1));
     accessToken=p.get('access_token');
-    try{ localStorage.setItem(TOKEN_KEY, accessToken); }catch(e){}
+    try{localStorage.setItem(TOKEN_KEY,accessToken);}catch(e){}
     window.history.replaceState({},'',window.location.pathname);
     return true;
   }
-  // 2. Vérifier le localStorage
-  try{
-    const t=localStorage.getItem(TOKEN_KEY);
-    if(t){ accessToken=t; return true; }
-  }catch(e){}
+  try{const t=localStorage.getItem(TOKEN_KEY);if(t){accessToken=t;return true;}}catch(e){}
   return false;
 }
 
-// ── CHARGEMENT DEPUIS SHEETS ──────────────────────────────
 async function chargerDepuisSheets(){
-  if(!accessToken) return false;
+  if(!accessToken)return false;
   aller('loading');
-  setLoading("Connexion à Google Sheets...", 10);
-
+  setLoading("Connexion à Google Sheets...",10);
   try{
-    // Lire toutes les données d'un coup avec batchGet
     const ranges=[];
     for(let s=1;s<=N_SEM;s++){
       for(let e=0;e<N_ETU;e++){
@@ -397,39 +343,33 @@ async function chargerDepuisSheets(){
         });
       }
     }
-
-    setLoading("Lecture des données...", 30);
-
-    // Découper en lots de 500 ranges (limite API)
+    setLoading("Lecture des données...",30);
     const BATCH=500;
     let allValues=[];
     for(let i=0;i<ranges.length;i+=BATCH){
       const lot=ranges.slice(i,i+BATCH);
       const pct=30+Math.round((i/ranges.length)*60);
-      setLoading(`Chargement... ${pct}%`, pct);
+      setLoading(`Chargement ${CLASSE}... ${pct}%`,pct);
       const params=lot.map(r=>`ranges=${encodeURIComponent(r)}`).join('&');
       const resp=await fetch(
         `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}&valueRenderOption=UNFORMATTED_VALUE`,
         {headers:{'Authorization':`Bearer ${accessToken}`}}
       );
       if(!resp.ok){
-        // Token expiré ?
         if(resp.status===401){
-          try{ localStorage.removeItem(TOKEN_KEY); }catch(e){}
+          try{localStorage.removeItem(TOKEN_KEY);}catch(e){}
           accessToken=null;
           aller('login');
           showToast("Session expirée, reconnectez-vous");
           return false;
         }
-        throw new Error("Erreur API "+resp.status);
+        const err=await resp.json();
+        throw new Error((err.error&&err.error.message)||"Erreur API "+resp.status);
       }
       const data=await resp.json();
-      if(data.valueRanges) allValues=allValues.concat(data.valueRanges);
+      if(data.valueRanges)allValues=allValues.concat(data.valueRanges);
     }
-
-    setLoading("Traitement des données...", 90);
-
-    // Remplir donnees
+    setLoading("Traitement...",90);
     initDonnees();
     let idx=0;
     for(let s=1;s<=N_SEM;s++){
@@ -439,36 +379,33 @@ async function chargerDepuisSheets(){
             if(idx<allValues.length){
               const vr=allValues[idx];
               const val=vr&&vr.values&&vr.values[0]&&vr.values[0][0];
-              donnees[s][e][ci][ki]=(val===true||val==="TRUE"||val===1||val==="1");
+              donneesParClasse[CLASSE][s][e][ci][ki]=(val===true||val==="TRUE"||val===1||val==="1");
             }
             idx++;
           });
         });
       }
     }
-
     sauvegarderLocal();
-    setLoading("Prêt !", 100);
+    setLoading("Prêt !",100);
     await new Promise(r=>setTimeout(r,500));
     return true;
-
   }catch(err){
-    console.error(err);
-    showToast("⚠️ Erreur chargement, données locales utilisées");
+    console.error("Erreur chargement:",err);
+    showToast("⚠️ "+err.message);
     return false;
   }
 }
 
-function setLoading(msg, pct){
+function setLoading(msg,pct){
   document.getElementById('loading-sub').textContent=msg;
   document.getElementById('loading-bar').style.width=pct+'%';
 }
 
-// ── SYNC VERS SHEETS ──────────────────────────────────────
 async function synchroniserVersSheets(){
-  if(!accessToken){ showToast("⚠️ Non connecté"); return; }
+  if(!accessToken){showToast("⚠️ Non connecté");return;}
   const btns=document.querySelectorAll('.btn-sync');
-  btns.forEach(b=>{ b.disabled=true; b.innerHTML='<span class="loader"></span>'; });
+  btns.forEach(b=>{b.disabled=true;b.innerHTML='<span class="loader"></span>';});
   try{
     const data=[];
     for(let s=1;s<=N_SEM;s++){
@@ -482,7 +419,6 @@ async function synchroniserVersSheets(){
         });
       }
     }
-    // Envoyer en lots de 500
     const BATCH=500;
     for(let i=0;i<data.length;i+=BATCH){
       const lot=data.slice(i,i+BATCH);
@@ -491,47 +427,45 @@ async function synchroniserVersSheets(){
         {method:'POST',headers:{'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json'},
          body:JSON.stringify({valueInputOption:"RAW",data:lot})}
       );
-      if(!resp.ok) throw new Error("Erreur sync "+resp.status);
+      if(!resp.ok)throw new Error("Erreur sync "+resp.status);
     }
-    showToast("✅ Synchronisé avec Google Sheets !");
-  }catch(e){
-    showToast("❌ Erreur : "+e.message);
-  }
-  btns.forEach(b=>{ b.disabled=false; b.innerHTML='↑ Sync'; });
+    showToast("✅ Synchronisé !");
+  }catch(e){showToast("❌ "+e.message);}
+  btns.forEach(b=>{b.disabled=false;b.innerHTML='↑ Sync';});
 }
 
 async function changerClasse(c){
-  if(CLASSE===c) return;
+  if(CLASSE===c)return;
   CLASSE=c;
-  donnees={};
-  initDonnees();
   // Mettre à jour les boutons
-  document.getElementById('btn-bts1').style.cssText=`flex:1;padding:10px;border-radius:10px;border:2px solid ${c==='BTS1'?'var(--accent)':'var(--border)'};background:${c==='BTS1'?'var(--accent)':'var(--bg3)'};color:${c==='BTS1'?'#fff':'var(--text2)'};font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer`;
-  document.getElementById('btn-bts2').style.cssText=`flex:1;padding:10px;border-radius:10px;border:2px solid ${c==='BTS2'?'var(--accent)':'var(--border)'};background:${c==='BTS2'?'var(--accent)':'var(--bg3)'};color:${c==='BTS2'?'#fff':'var(--text2)'};font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer`;
+  document.getElementById('btn-bts1').className='classe-btn'+(c==='BTS1'?' active':'');
+  document.getElementById('btn-bts2').className='classe-btn'+(c==='BTS2'?' active':'');
+  // Charger les données
+  donneesParClasse[CLASSE]={};
+  initDonnees();
   showToast(`Chargement ${c}...`);
   const ok=await chargerDepuisSheets();
-  if(!ok){ chargerLocal(); initDonnees(); }
+  if(!ok){chargerLocal();initDonnees();}
   initAccueil();
+  aller('home');
   showToast(`✅ Classe ${c} chargée`);
 }
 
-// ── ACCUEIL ───────────────────────────────────────────────
 function initAccueil(){
-  const grid=document.getElementById('sem-grid');
-  grid.innerHTML='';
+  const grid=document.getElementById('sem-grid');grid.innerHTML='';
   for(let s=1;s<=N_SEM;s++){
     const btn=document.createElement('div');
     btn.className='sem-btn'+(s===semaine?' active':'');
     btn.innerHTML=`<div class="sem-num">${s}</div><div class="sem-lbl">sem.</div>`;
-    btn.onclick=()=>{ semaine=s; initAccueil(); showToast(`Semaine ${s}`); };
+    btn.onclick=()=>{semaine=s;initAccueil();showToast(`Semaine ${s}`);};
     grid.appendChild(btn);
   }
   document.getElementById('stat-semaine').textContent=semaine;
   document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
 }
 
-// ── LISTE ─────────────────────────────────────────────────
 function ouvrirListe(){
+  document.getElementById('liste-classe-label').textContent=`Étudiants ${CLASSE}`;
   document.getElementById('liste-sem-label').textContent=`Semaine ${semaine}`;
   document.getElementById('search-input').value='';
   afficherListeEtudiants(PRENOMS);
@@ -542,13 +476,13 @@ function filtrerEtudiants(){
   afficherListeEtudiants(PRENOMS.filter(p=>p.toLowerCase().includes(q)));
 }
 function afficherListeEtudiants(liste){
-  const c=document.getElementById('etudiant-list'); c.innerHTML='';
+  const c=document.getElementById('etudiant-list');c.innerHTML='';
   liste.forEach(prenom=>{
     const idx=PRENOMS.indexOf(prenom);
     const score=scoreEtudiant(semaine,idx);
     const color=avatarColor(idx);
     const sc=score>=1.5?'#3ecf8e':score>=0.5?'#f5c842':'#f87171';
-    const div=document.createElement('div'); div.className='etudiant-item';
+    const div=document.createElement('div');div.className='etudiant-item';
     div.innerHTML=`<div class="etudiant-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
       <div style="flex:1"><div class="etudiant-name">${prenom}</div><div class="etudiant-score">Score S${semaine} : ${score.toFixed(2)} pts</div></div>
       <div class="etudiant-badge" style="background:${sc}22;color:${sc}">${score.toFixed(1)}</div>`;
@@ -557,24 +491,22 @@ function afficherListeEtudiants(liste){
   });
 }
 
-// ── SAISIE ────────────────────────────────────────────────
-function ouvrirSaisie(idx){ etudiantIdx=idx; afficherSaisie(); aller('saisie'); }
+function ouvrirSaisie(idx){etudiantIdx=idx;afficherSaisie();aller('saisie');}
 function afficherSaisie(){
   const prenom=PRENOMS[etudiantIdx];
   const color=avatarColor(etudiantIdx);
   document.getElementById('saisie-header-name').textContent=prenom;
-  document.getElementById('saisie-header-sem').textContent=`Semaine ${semaine}`;
+  document.getElementById('saisie-header-sem').textContent=`${CLASSE} · Semaine ${semaine}`;
   document.getElementById('saisie-name').textContent=prenom;
-  document.getElementById('saisie-sem').textContent=`Semaine ${semaine} · ${etudiantIdx+1}/${N_ETU}`;
+  document.getElementById('saisie-sem').textContent=`${CLASSE} · Semaine ${semaine} · ${etudiantIdx+1}/${N_ETU}`;
   document.getElementById('saisie-avatar').textContent=initiales(prenom);
   document.getElementById('saisie-avatar').style.cssText=`background:${color}22;color:${color}`;
   document.getElementById('saisie-score').textContent=scoreEtudiant(semaine,etudiantIdx).toFixed(2);
   document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
-
-  const container=document.getElementById('criteres-list'); container.innerHTML='';
+  const container=document.getElementById('criteres-list');container.innerHTML='';
   CRITERES.forEach((crit,ci)=>{
     const ptsTxt=crit.cases.map(c=>(c.pts>0?'+':'')+c.pts).join(' / ');
-    const card=document.createElement('div'); card.className='critere-card';
+    const card=document.createElement('div');card.className='critere-card';
     card.innerHTML=`<div class="critere-header">
       <div class="critere-dot" style="background:${crit.couleur}"></div>
       <div class="critere-name">${crit.nom}</div>
@@ -582,24 +514,22 @@ function afficherSaisie(){
     </div><div class="critere-cases" id="cc-${ci}"></div>`;
     container.appendChild(card);
     const casesDiv=document.getElementById(`cc-${ci}`);
-
     if(crit.cases.length>1){
       const naBtn=document.createElement('button');
       naBtn.className='case-btn na-btn'+(crit.cases.every((_,ki)=>!getVal(semaine,etudiantIdx,ci,ki))?' checked':'');
       naBtn.textContent='— N/A';
-      naBtn.onclick=()=>{ crit.cases.forEach((_,ki)=>setVal(semaine,etudiantIdx,ci,ki,false)); afficherSaisie(); };
+      naBtn.onclick=()=>{crit.cases.forEach((_,ki)=>setVal(semaine,etudiantIdx,ci,ki,false));afficherSaisie();};
       casesDiv.appendChild(naBtn);
     }
-
     crit.cases.forEach((cas,ki)=>{
       const btn=document.createElement('button');
       const checked=getVal(semaine,etudiantIdx,ci,ki);
       btn.className='case-btn'+(checked?' checked':'');
       btn.textContent=cas.lbl;
-      if(checked){ btn.style.cssText=`background:${crit.couleur}33;border-color:${crit.couleur};color:${crit.couleur}`; }
+      if(checked)btn.style.cssText=`background:${crit.couleur}33;border-color:${crit.couleur};color:${crit.couleur}`;
       btn.onclick=()=>{
         const nv=!getVal(semaine,etudiantIdx,ci,ki);
-        if(crit.cases.length>1&&nv) crit.cases.forEach((_,k2)=>{ if(k2!==ki) setVal(semaine,etudiantIdx,ci,k2,false); });
+        if(crit.cases.length>1&&nv)crit.cases.forEach((_,k2)=>{if(k2!==ki)setVal(semaine,etudiantIdx,ci,k2,false);});
         setVal(semaine,etudiantIdx,ci,ki,nv);
         afficherSaisie();
       };
@@ -607,32 +537,29 @@ function afficherSaisie(){
     });
   });
 }
+function etudiantSuivant(){if(etudiantIdx<N_ETU-1){etudiantIdx++;afficherSaisie();}else showToast("Dernier étudiant !");}
+function etudiantPrecedent(){if(etudiantIdx>0){etudiantIdx--;afficherSaisie();}else showToast("Premier étudiant !");}
 
-function etudiantSuivant(){ if(etudiantIdx<N_ETU-1){ etudiantIdx++; afficherSaisie(); } else showToast("Dernier étudiant !"); }
-function etudiantPrecedent(){ if(etudiantIdx>0){ etudiantIdx--; afficherSaisie(); } else showToast("Premier étudiant !"); }
-
-// ── RAPIDE ────────────────────────────────────────────────
 function ouvrirRapide(){
-  document.getElementById('rapide-sem-label').textContent=`Semaine ${semaine}`;
-  critereRapide=0;
-  afficherTabsCriteres(); afficherRapide(); aller('rapide');
+  document.getElementById('rapide-sem-label').textContent=`${CLASSE} · Semaine ${semaine}`;
+  critereRapide=0;afficherTabsCriteres();afficherRapide();aller('rapide');
 }
 function afficherTabsCriteres(){
-  const tabs=document.getElementById('critere-tabs'); tabs.innerHTML='';
+  const tabs=document.getElementById('critere-tabs');tabs.innerHTML='';
   CRITERES.forEach((crit,ci)=>{
     const tab=document.createElement('div');
     tab.className='critere-tab'+(ci===critereRapide?' active':'');
-    if(ci===critereRapide) tab.style.cssText=`background:${crit.couleur};border-color:${crit.couleur}`;
+    if(ci===critereRapide)tab.style.cssText=`background:${crit.couleur};border-color:${crit.couleur}`;
     tab.textContent=crit.nom;
-    tab.onclick=()=>{ critereRapide=ci; afficherTabsCriteres(); afficherRapide(); };
+    tab.onclick=()=>{critereRapide=ci;afficherTabsCriteres();afficherRapide();};
     tabs.appendChild(tab);
   });
 }
 function afficherRapide(){
   const crit=CRITERES[critereRapide];
-  const container=document.getElementById('rapide-list'); container.innerHTML='';
+  const container=document.getElementById('rapide-list');container.innerHTML='';
   PRENOMS.forEach((prenom,idx)=>{
-    const div=document.createElement('div'); div.className='rapide-item';
+    const div=document.createElement('div');div.className='rapide-item';
     const color=avatarColor(idx);
     let casesHTML='';
     crit.cases.forEach((cas,ki)=>{
@@ -650,38 +577,29 @@ function afficherRapide(){
 function toggleRapide(e,ci,ki){
   const crit=CRITERES[ci];
   const nv=!getVal(semaine,e,ci,ki);
-  if(crit.cases.length>1&&nv) crit.cases.forEach((_,k2)=>{ if(k2!==ki) setVal(semaine,e,ci,k2,false); });
+  if(crit.cases.length>1&&nv)crit.cases.forEach((_,k2)=>{if(k2!==ki)setVal(semaine,e,ci,k2,false);});
   setVal(semaine,e,ci,ki,nv);
   afficherRapide();
 }
-
-// mode : 0 = tout cocher (case 0), -1 = tout décocher
 function toutCocherRapide(mode){
   const crit=CRITERES[critereRapide];
   PRENOMS.forEach((_,idx)=>{
     crit.cases.forEach((_,ki)=>setVal(semaine,idx,critereRapide,ki,false));
-    if(mode===0) setVal(semaine,idx,critereRapide,0,true);
+    if(mode===0)setVal(semaine,idx,critereRapide,0,true);
   });
   afficherRapide();
   showToast(mode===0?"✅ Tous cochés":"☐ Tous décochés");
 }
 
-// ── INIT ──────────────────────────────────────────────────
-window.onload = async function(){
+window.onload=async function(){
   initDonnees();
-
   if(verifierToken()){
-    // Essayer de charger depuis Sheets, sinon utiliser local
     const ok=await chargerDepuisSheets();
-    if(!ok){
-      chargerLocal();
-      initDonnees();
-    }
+    if(!ok){chargerLocal();initDonnees();}
     initAccueil();
     aller('home');
     showToast("✅ Données chargées !");
   } else {
-    // Essayer de charger les données locales sans connexion
     chargerLocal();
     aller('login');
   }
