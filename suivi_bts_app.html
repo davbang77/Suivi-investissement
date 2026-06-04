@@ -344,27 +344,39 @@ async function chargerDepuisSheets(){
       }
     }
     setLoading("Lecture des données...",30);
-    const BATCH=500;
+    const BATCH=200;
     let allValues=[];
     for(let i=0;i<ranges.length;i+=BATCH){
       const lot=ranges.slice(i,i+BATCH);
       const pct=30+Math.round((i/ranges.length)*60);
       setLoading(`Chargement ${CLASSE}... ${pct}%`,pct);
       const params=lot.map(r=>`ranges=${encodeURIComponent(r)}`).join('&');
-      const resp=await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}&valueRenderOption=UNFORMATTED_VALUE`,
-        {headers:{'Authorization':`Bearer ${accessToken}`}}
-      );
+      let resp;
+      try{
+        resp=await fetch(
+          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}&valueRenderOption=UNFORMATTED_VALUE`,
+          {headers:{'Authorization':`Bearer ${accessToken}`}}
+        );
+      }catch(fetchErr){
+        throw new Error("Erreur réseau : "+fetchErr.message);
+      }
       if(!resp.ok){
         if(resp.status===401){
           try{localStorage.removeItem(TOKEN_KEY);}catch(e){}
           accessToken=null;
           aller('login');
-          showToast("Session expirée, reconnectez-vous");
+          showToast("Session expirée — reconnectez-vous");
           return false;
         }
-        const err=await resp.json();
-        throw new Error((err.error&&err.error.message)||"Erreur API "+resp.status);
+        if(resp.status===400){
+          // Nom d'onglet introuvable — afficher le nom cherché
+          setLoading(`❌ Onglet introuvable : "${sheetName()}"`,30);
+          await new Promise(r=>setTimeout(r,3000));
+          throw new Error(`Onglet introuvable : "${sheetName()}". Vérifiez le nom exact dans Sheets.`);
+        }
+        let errMsg="Erreur API "+resp.status;
+        try{const err=await resp.json();errMsg=(err.error&&err.error.message)||errMsg;}catch(e){}
+        throw new Error(errMsg);
       }
       const data=await resp.json();
       if(data.valueRanges)allValues=allValues.concat(data.valueRanges);
@@ -392,7 +404,10 @@ async function chargerDepuisSheets(){
     return true;
   }catch(err){
     console.error("Erreur chargement:",err);
+    setLoading("❌ "+err.message, 30);
+    await new Promise(r=>setTimeout(r,4000));
     showToast("⚠️ "+err.message);
+    aller('home');
     return false;
   }
 }
