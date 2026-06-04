@@ -197,7 +197,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div class="saisie-score-display">
       <div class="saisie-score-num" id="saisie-score">0.00</div>
-      <div class="saisie-score-lbl">pts cette sem.</div>
+      <div class="saisie-score-lbl">sem. &nbsp;|&nbsp; <span id="saisie-cumul">0.00</span>/20 cumul</div>
     </div>
   </div>
   <div class="criteres-list" id="criteres-list"></div>
@@ -303,6 +303,11 @@ function chargerLocal(){
 }
 
 function scoreEtudiant(s,e){let t=0;CRITERES.forEach((c,ci)=>{c.cases.forEach((cas,ki)=>{if(getVal(s,e,ci,ki))t+=cas.pts;});});return t;}
+function scoreCumul(e){
+  let total=0;
+  for(let s=1;s<=N_SEM;s++) total+=scoreEtudiant(s,e);
+  return Math.min(total,20);
+}
 function scoreSemaine(s){let sum=0;for(let i=0;i<N_ETU;i++)sum+=scoreEtudiant(s,i);return(sum/N_ETU).toFixed(2);}
 
 function colLettre(idx){let r="";while(idx>0){idx--;r=String.fromCharCode(65+idx%26)+r;idx=Math.floor(idx/26);}return r;}
@@ -494,13 +499,17 @@ function afficherListeEtudiants(liste){
   const c=document.getElementById('etudiant-list');c.innerHTML='';
   liste.forEach(prenom=>{
     const idx=PRENOMS.indexOf(prenom);
-    const score=scoreEtudiant(semaine,idx);
+    const scoreSem=scoreEtudiant(semaine,idx);
+    const cumul=scoreCumul(idx);
     const color=avatarColor(idx);
-    const sc=score>=1.5?'#3ecf8e':score>=0.5?'#f5c842':'#f87171';
+    const sc=cumul>=13?'#3ecf8e':cumul>=10?'#f5c842':'#f87171';
     const div=document.createElement('div');div.className='etudiant-item';
     div.innerHTML=`<div class="etudiant-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
-      <div style="flex:1"><div class="etudiant-name">${prenom}</div><div class="etudiant-score">Score S${semaine} : ${score.toFixed(2)} pts</div></div>
-      <div class="etudiant-badge" style="background:${sc}22;color:${sc}">${score.toFixed(1)}</div>`;
+      <div style="flex:1">
+        <div class="etudiant-name">${prenom}</div>
+        <div class="etudiant-score">S${semaine} : ${scoreSem.toFixed(2)} pts &nbsp;|&nbsp; Cumul : ${cumul.toFixed(2)}/20</div>
+      </div>
+      <div class="etudiant-badge" style="background:${sc}22;color:${sc}">${cumul.toFixed(2)}</div>`;
     div.onclick=()=>ouvrirSaisie(idx);
     c.appendChild(div);
   });
@@ -517,6 +526,7 @@ function afficherSaisie(){
   document.getElementById('saisie-avatar').textContent=initiales(prenom);
   document.getElementById('saisie-avatar').style.cssText=`background:${color}22;color:${color}`;
   document.getElementById('saisie-score').textContent=scoreEtudiant(semaine,etudiantIdx).toFixed(2);
+  document.getElementById('saisie-cumul').textContent=scoreCumul(etudiantIdx).toFixed(2);
   document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
   const container=document.getElementById('criteres-list');container.innerHTML='';
   CRITERES.forEach((crit,ci)=>{
