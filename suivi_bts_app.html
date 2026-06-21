@@ -423,7 +423,13 @@ function setLoading(msg,pct){
 }
 
 async function synchroniserVersSheets(){
-  if(!accessToken){showToast("⚠️ Non connecté");return;}
+  if(!accessToken){
+    // Proposer de se reconnecter
+    if(confirm("Session expirée. Se reconnecter à Google ?")){
+      connecterGoogle();
+    }
+    return;
+  }
   const btns=document.querySelectorAll('.btn-sync');
   btns.forEach(b=>{b.disabled=true;b.innerHTML='<span class="loader"></span>';});
   try{
@@ -620,10 +626,20 @@ window.onload=async function(){
   initDonnees();
   if(verifierToken()){
     const ok=await chargerDepuisSheets();
-    if(!ok){chargerLocal();initDonnees();}
-    initAccueil();
-    aller('home');
-    showToast("✅ Données chargées !");
+    if(!ok&&accessToken){
+      // Chargement échoué mais token présent → données locales
+      chargerLocal();initDonnees();
+      initAccueil();aller('home');
+      showToast("⚠️ Données locales (sync impossible)");
+    } else if(!accessToken){
+      // Token expiré pendant le chargement
+      chargerLocal();initDonnees();
+      initAccueil();aller('home');
+      showToast("⚠️ Session expirée — appuie sur Sync pour reconnecter");
+    } else {
+      initAccueil();aller('home');
+      showToast("✅ Données chargées !");
+    }
   } else {
     chargerLocal();
     aller('login');
