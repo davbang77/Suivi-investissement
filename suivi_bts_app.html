@@ -9,12 +9,7 @@
 <title>Suivi BTS MCO</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg:#0f1a2e; --bg2:#1a2744; --bg3:#243358;
-  --accent:#4f9cf9; --gold:#f5c842; --green:#3ecf8e;
-  --red:#f87171; --orange:#fb923c; --text:#e8edf8;
-  --text2:#8fa3c8; --border:#2d3f5e; --radius:14px;
-}
+:root{--bg:#0f1a2e;--bg2:#1a2744;--bg3:#243358;--accent:#4f9cf9;--gold:#f5c842;--green:#3ecf8e;--red:#f87171;--orange:#fb923c;--text:#e8edf8;--text2:#8fa3c8;--border:#2d3f5e;--radius:14px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 .screen{display:none;min-height:100vh;flex-direction:column}
@@ -30,7 +25,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .loading-spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 20px}
 .loading-text{font-size:16px;font-weight:500;margin-bottom:8px}
 .loading-sub{font-size:13px;color:var(--text2)}
-.loading-progress{margin-top:16px;background:var(--bg3);border-radius:10px;height:6px;width:200px;margin:16px auto 0}
+.loading-progress{background:var(--bg3);border-radius:10px;height:6px;width:200px;margin:16px auto 0}
 .loading-bar{height:6px;background:var(--accent);border-radius:10px;width:0%;transition:width .3s}
 @keyframes spin{to{transform:rotate(360deg)}}
 .app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100}
@@ -149,7 +144,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button id="btn-bts2" class="classe-btn" onclick="changerClasse('BTS2')">BTS 2</button>
     </div>
     <div class="home-stats">
-      <div class="stat-card"><div class="stat-num">40</div><div class="stat-lbl">Étudiants</div></div>
+      <div class="stat-card"><div class="stat-num" id="stat-nb">—</div><div class="stat-lbl">Étudiants</div></div>
       <div class="stat-card"><div class="stat-num" id="stat-semaine">—</div><div class="stat-lbl">Semaine</div></div>
       <div class="stat-card"><div class="stat-num" id="stat-moy">—</div><div class="stat-lbl">Moy. classe</div></div>
     </div>
@@ -185,7 +180,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <div id="screen-saisie" class="screen">
   <div class="app-header">
-    <button class="btn-back" onclick="afficherListeEtudiants(PRENOMS);aller('liste')">←</button>
+    <button class="btn-back" onclick="afficherListeEtudiants(prenoms());aller('liste')">←</button>
     <div style="flex:1"><div class="header-title" id="saisie-header-name">—</div><div class="header-sub" id="saisie-header-sem">—</div></div>
     <button class="btn-sync" onclick="synchroniserVersSheets()">↑ Sync</button>
   </div>
@@ -197,7 +192,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div class="saisie-score-display">
       <div class="saisie-score-num" id="saisie-score">0.00</div>
-      <div class="saisie-score-lbl">sem. &nbsp;|&nbsp; <span id="saisie-cumul">0.00</span>/20 cumul</div>
+      <div class="saisie-score-lbl">sem. | <span id="saisie-cumul">0.00</span>/20 cumul</div>
     </div>
   </div>
   <div class="criteres-list" id="criteres-list"></div>
@@ -226,62 +221,54 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 <div class="toast" id="toast"></div>
 
 <script>
-const CLIENT_ID  = "182320571341-erkkksqh4epeetgmcuebeobhhc6sel87.apps.googleusercontent.com";
-const SHEET_ID   = "18eqFQg67E0aGq26S-ApqQoOd4cbx1THYbPp3qZ6xqMg";
-const SCOPES     = "https://www.googleapis.com/auth/spreadsheets";
-const TOKEN_KEY  = "suivi_bts_token";
+const CLIENT_ID = "182320571341-erkkksqh4epeetgmcuebeobhhc6sel87.apps.googleusercontent.com";
+const SHEET_ID  = "18eqFQg67E0aGq26S-ApqQoOd4cbx1THYbPp3qZ6xqMg";
+const SCOPES    = "https://www.googleapis.com/auth/spreadsheets";
+const TOKEN_KEY = "suivi_bts_token";
 
-// ⚠️ Noms exacts des onglets Google Sheets
+// Noms exacts des onglets Google Sheets
 function sheetName(){ return `Suivi investissement ${CLASSE}`; }
 
-const PRENOMS = ["Alice","Baptiste","Camille","Dylan","Emma","Félix","Gaëlle","Hugo",
-  "Inès","Jules","Karine","Léo","Manon","Nathan","Océane","Pierre",
-  "Quentin","Romain","Sara","Thomas","Ugo","Valentine","William","Xavier",
-  "Yasmine","Zoé","Adrien","Bérénice","Clément","Diane","Ethan","Flora",
-  "Gabriel","Hannah","Ilan","Julie","Kevin","Laura","Maxime","Nina"];
+// Prénoms chargés dynamiquement depuis Sheets
+let PRENOMS_BTS1 = [];
+let PRENOMS_BTS2 = [];
+function prenoms(){ return CLASSE==="BTS1" ? PRENOMS_BTS1 : PRENOMS_BTS2; }
 
-const CRITERES = [
-  {id:"comp",  nom:"Comportement",   couleur:"#3ecf8e", cases:[{lbl:"✓ Bien",    pts:0.5}]},
-  {id:"auto",  nom:"Autonomie",      couleur:"#f5c842", cases:[{lbl:"✓ Bien",    pts:0.5}]},
-  {id:"parti", nom:"Participation",  couleur:"#4f9cf9", cases:[{lbl:"✓ Part.",   pts:0.25}]},
-  {id:"qcm",   nom:"QCM",            couleur:"#a78bfa", cases:[{lbl:"✓ Fait",    pts:0.3}]},
-  {id:"tenue", nom:"Tenue",          couleur:"#fb923c", cases:[
-    {lbl:"✓ Bien",     pts:0.25},
-    {lbl:"✗ Jogging",  pts:-0.5}
+const CRITERES=[
+  {id:"comp", nom:"Comportement",  couleur:"#3ecf8e",cases:[{lbl:"✓ Bien",   pts:0.5}]},
+  {id:"auto", nom:"Autonomie",     couleur:"#f5c842",cases:[{lbl:"✓ Bien",   pts:0.5}]},
+  {id:"parti",nom:"Participation", couleur:"#4f9cf9",cases:[{lbl:"✓ Part.",  pts:0.25}]},
+  {id:"qcm",  nom:"QCM",           couleur:"#a78bfa",cases:[{lbl:"✓ Fait",   pts:0.3}]},
+  {id:"tenue",nom:"Tenue",         couleur:"#fb923c",cases:[
+    {lbl:"✓ Bien",    pts:0.25},
+    {lbl:"✗ Jogging", pts:-0.5}
   ]},
-  {id:"tm",    nom:"Travail Maison", couleur:"#f87171", cases:[
-    {lbl:"✓ Fait",     pts:0.7},
-    {lbl:"✗ Non fait", pts:-1.0}
+  {id:"tm",   nom:"Travail Maison",couleur:"#f87171",cases:[
+    {lbl:"✓ Fait",    pts:0.7},
+    {lbl:"✗ Non fait",pts:-1.0}
   ]},
 ];
 
-const N_COLS_SEM = 9;
-const COL_OFFSET = 3;
-const ROW_START  = 7;
-const N_ETU      = 40;
-const N_SEM      = 10;
+const N_COLS_SEM=9; const COL_OFFSET=3; const ROW_START=7; const N_SEM=10;
 
-let accessToken  = null;
-let CLASSE       = "BTS1";
-let semaine      = 1;
-let etudiantIdx  = 0;
-let critereRapide= 0;
-// Données séparées par classe
-let donneesParClasse = { BTS1:{}, BTS2:{} };
-function donnees(){ return donneesParClasse[CLASSE]; }
-function storageKey(){ return `suivi_bts_data_${CLASSE}`; }
+let accessToken=null; let CLASSE="BTS1"; let semaine=1; let etudiantIdx=0; let critereRapide=0;
+let donneesParClasse={BTS1:{},BTS2:{}};
+function donnees(){return donneesParClasse[CLASSE];}
+function storageKey(){return `suivi_bts_data_${CLASSE}`;}
+function nEtu(){return prenoms().length||40;}
 
 const COLORS=["#3ecf8e","#f5c842","#4f9cf9","#a78bfa","#fb923c","#f87171","#60a5fa","#34d399","#fbbf24","#e879f9"];
 function avatarColor(i){return COLORS[i%COLORS.length];}
-function initiales(p){return p.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);}
+function initiales(p){return (p||"?").split(' ').map(w=>w[0]||"").join('').toUpperCase().slice(0,2)||"?";}
 function showToast(msg,d=2500){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
 function aller(s){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById('screen-'+s).classList.add('active');}
 
 function initDonnees(){
   const d=donneesParClasse[CLASSE];
+  const n=nEtu();
   for(let s=1;s<=N_SEM;s++){
     if(!d[s])d[s]={};
-    for(let e=0;e<N_ETU;e++){
+    for(let e=0;e<n;e++){
       if(!d[s][e])d[s][e]={};
       CRITERES.forEach((c,ci)=>{
         if(!d[s][e][ci])d[s][e][ci]={};
@@ -292,23 +279,19 @@ function initDonnees(){
 }
 
 function getVal(s,e,ci,ki){try{return donneesParClasse[CLASSE][s][e][ci][ki]||false;}catch(err){return false;}}
-function setVal(s,e,ci,ki,v){
-  try{donneesParClasse[CLASSE][s][e][ci][ki]=v;}catch(err){}
-  sauvegarderLocal();
-}
+function setVal(s,e,ci,ki,v){try{donneesParClasse[CLASSE][s][e][ci][ki]=v;}catch(err){}sauvegarderLocal();}
 function sauvegarderLocal(){try{localStorage.setItem(storageKey(),JSON.stringify(donneesParClasse[CLASSE]));}catch(e){}}
 function chargerLocal(){
+  // Charger prénoms
+  try{const p=localStorage.getItem(`prenoms_${CLASSE}`);if(p){if(CLASSE==="BTS1")PRENOMS_BTS1=JSON.parse(p);else PRENOMS_BTS2=JSON.parse(p);}}catch(e){}
+  // Charger données
   try{const d=localStorage.getItem(storageKey());if(d){donneesParClasse[CLASSE]=JSON.parse(d);return true;}}catch(e){}
   return false;
 }
 
 function scoreEtudiant(s,e){let t=0;CRITERES.forEach((c,ci)=>{c.cases.forEach((cas,ki)=>{if(getVal(s,e,ci,ki))t+=cas.pts;});});return t;}
-function scoreCumul(e){
-  let total=0;
-  for(let s=1;s<=N_SEM;s++) total+=scoreEtudiant(s,e);
-  return Math.min(total,20);
-}
-function scoreSemaine(s){let sum=0;for(let i=0;i<N_ETU;i++)sum+=scoreEtudiant(s,i);return(sum/N_ETU).toFixed(2);}
+function scoreCumul(e){let t=0;for(let s=1;s<=N_SEM;s++)t+=scoreEtudiant(s,e);return Math.min(t,20);}
+function scoreSemaine(s){const n=nEtu();if(!n)return"—";let sum=0;for(let i=0;i<n;i++)sum+=scoreEtudiant(s,i);return(sum/n).toFixed(2);}
 
 function colLettre(idx){let r="";while(idx>0){idx--;r=String.fromCharCode(65+idx%26)+r;idx=Math.floor(idx/26);}return r;}
 function semColStart(s){return COL_OFFSET+(s-1)*N_COLS_SEM;}
@@ -330,67 +313,75 @@ function verifierToken(){
   try{const t=localStorage.getItem(TOKEN_KEY);if(t){accessToken=t;return true;}}catch(e){}
   return false;
 }
+function setLoading(msg,pct){document.getElementById('loading-sub').textContent=msg;document.getElementById('loading-bar').style.width=pct+'%';}
+
+// Charger les prénoms depuis colonne B de Sheets
+async function chargerPrenomsDepuisSheets(){
+  const MAX_ETU=40;
+  const ranges=[];
+  for(let e=0;e<MAX_ETU;e++) ranges.push(`${sheetName()}!B${ROW_START+e*2}`);
+  const params=ranges.map(r=>`ranges=${encodeURIComponent(r)}`).join('&');
+  try{
+    const resp=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}`,
+      {headers:{'Authorization':`Bearer ${accessToken}`}});
+    if(!resp.ok)return false;
+    const data=await resp.json();
+    const noms=(data.valueRanges||[]).map(vr=>(vr&&vr.values&&vr.values[0]&&vr.values[0][0])?String(vr.values[0][0]):"").filter(n=>n!=="");
+    if(noms.length>0){
+      if(CLASSE==="BTS1")PRENOMS_BTS1=noms; else PRENOMS_BTS2=noms;
+      try{localStorage.setItem(`prenoms_${CLASSE}`,JSON.stringify(noms));}catch(e){}
+      return true;
+    }
+  }catch(e){}
+  return false;
+}
 
 async function chargerDepuisSheets(){
   if(!accessToken)return false;
   aller('loading');
-  setLoading("Connexion à Google Sheets...",10);
+  setLoading("Chargement des étudiants...",10);
   try{
+    // 1. Charger les prénoms
+    await chargerPrenomsDepuisSheets();
+    const n=nEtu();
+    setLoading("Lecture des données...",20);
+
+    // 2. Charger les cases
     const ranges=[];
     for(let s=1;s<=N_SEM;s++){
-      for(let e=0;e<N_ETU;e++){
+      for(let e=0;e<n;e++){
         CRITERES.forEach((c,ci)=>{
           c.cases.forEach((_,ki)=>{
-            const col=colPourCase(s,ci,ki);
-            const row=ROW_START+e*2;
-            ranges.push(`${sheetName()}!${colLettre(col)}${row}`);
+            ranges.push(`${sheetName()}!${colLettre(colPourCase(s,ci,ki))}${ROW_START+e*2}`);
           });
         });
       }
     }
-    setLoading("Lecture des données...",30);
-    const BATCH=200;
-    let allValues=[];
+
+    const BATCH=200; let allValues=[];
     for(let i=0;i<ranges.length;i+=BATCH){
       const lot=ranges.slice(i,i+BATCH);
-      const pct=30+Math.round((i/ranges.length)*60);
+      const pct=20+Math.round((i/ranges.length)*70);
       setLoading(`Chargement ${CLASSE}... ${pct}%`,pct);
       const params=lot.map(r=>`ranges=${encodeURIComponent(r)}`).join('&');
       let resp;
-      try{
-        resp=await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}&valueRenderOption=UNFORMATTED_VALUE`,
-          {headers:{'Authorization':`Bearer ${accessToken}`}}
-        );
-      }catch(fetchErr){
-        throw new Error("Erreur réseau : "+fetchErr.message);
-      }
+      try{resp=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?${params}&valueRenderOption=UNFORMATTED_VALUE`,
+        {headers:{'Authorization':`Bearer ${accessToken}`}});}
+      catch(e){throw new Error("Erreur réseau : "+e.message);}
       if(!resp.ok){
-        if(resp.status===401){
-          try{localStorage.removeItem(TOKEN_KEY);}catch(e){}
-          accessToken=null;
-          aller('login');
-          showToast("Session expirée — reconnectez-vous");
-          return false;
-        }
-        if(resp.status===400){
-          // Nom d'onglet introuvable — afficher le nom cherché
-          setLoading(`❌ Onglet introuvable : "${sheetName()}"`,30);
-          await new Promise(r=>setTimeout(r,3000));
-          throw new Error(`Onglet introuvable : "${sheetName()}". Vérifiez le nom exact dans Sheets.`);
-        }
-        let errMsg="Erreur API "+resp.status;
-        try{const err=await resp.json();errMsg=(err.error&&err.error.message)||errMsg;}catch(e){}
-        throw new Error(errMsg);
+        if(resp.status===401){try{localStorage.removeItem(TOKEN_KEY);}catch(e){}accessToken=null;aller('login');showToast("Session expirée — reconnectez-vous");return false;}
+        if(resp.status===400){setLoading(`❌ Onglet introuvable : "${sheetName()}"`,20);await new Promise(r=>setTimeout(r,3000));throw new Error(`Onglet introuvable : "${sheetName()}"`);}
+        let m="Erreur "+resp.status;try{const e=await resp.json();m=(e.error&&e.error.message)||m;}catch(e){}throw new Error(m);
       }
       const data=await resp.json();
       if(data.valueRanges)allValues=allValues.concat(data.valueRanges);
     }
-    setLoading("Traitement...",90);
+
+    setLoading("Traitement...",92);
     initDonnees();
     let idx=0;
     for(let s=1;s<=N_SEM;s++){
-      for(let e=0;e<N_ETU;e++){
+      for(let e=0;e<n;e++){
         CRITERES.forEach((c,ci)=>{
           c.cases.forEach((_,ki)=>{
             if(idx<allValues.length){
@@ -405,54 +396,41 @@ async function chargerDepuisSheets(){
     }
     sauvegarderLocal();
     setLoading("Prêt !",100);
-    await new Promise(r=>setTimeout(r,500));
+    await new Promise(r=>setTimeout(r,400));
     return true;
   }catch(err){
-    console.error("Erreur chargement:",err);
-    setLoading("❌ "+err.message, 30);
-    await new Promise(r=>setTimeout(r,4000));
+    setLoading("❌ "+err.message,20);
+    await new Promise(r=>setTimeout(r,3000));
     showToast("⚠️ "+err.message);
     aller('home');
     return false;
   }
 }
 
-function setLoading(msg,pct){
-  document.getElementById('loading-sub').textContent=msg;
-  document.getElementById('loading-bar').style.width=pct+'%';
-}
-
 async function synchroniserVersSheets(){
   if(!accessToken){
-    // Proposer de se reconnecter
-    if(confirm("Session expirée. Se reconnecter à Google ?")){
-      connecterGoogle();
-    }
+    if(confirm("Session expirée. Se reconnecter à Google ?")){connecterGoogle();}
     return;
   }
   const btns=document.querySelectorAll('.btn-sync');
   btns.forEach(b=>{b.disabled=true;b.innerHTML='<span class="loader"></span>';});
   try{
+    const n=nEtu();
     const data=[];
     for(let s=1;s<=N_SEM;s++){
-      for(let e=0;e<N_ETU;e++){
+      for(let e=0;e<n;e++){
         CRITERES.forEach((c,ci)=>{
           c.cases.forEach((_,ki)=>{
-            const col=colPourCase(s,ci,ki);
-            const row=ROW_START+e*2;
-            data.push({range:`${sheetName()}!${colLettre(col)}${row}`,values:[[getVal(s,e,ci,ki)]]});
+            data.push({range:`${sheetName()}!${colLettre(colPourCase(s,ci,ki))}${ROW_START+e*2}`,values:[[getVal(s,e,ci,ki)]]});
           });
         });
       }
     }
     const BATCH=500;
     for(let i=0;i<data.length;i+=BATCH){
-      const lot=data.slice(i,i+BATCH);
-      const resp=await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,
+      const resp=await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchUpdate`,
         {method:'POST',headers:{'Authorization':`Bearer ${accessToken}`,'Content-Type':'application/json'},
-         body:JSON.stringify({valueInputOption:"RAW",data:lot})}
-      );
+         body:JSON.stringify({valueInputOption:"RAW",data:data.slice(i,i+BATCH)})});
       if(!resp.ok)throw new Error("Erreur sync "+resp.status);
     }
     showToast("✅ Synchronisé !");
@@ -463,18 +441,17 @@ async function synchroniserVersSheets(){
 async function changerClasse(c){
   if(CLASSE===c)return;
   CLASSE=c;
-  // Mettre à jour les boutons
   document.getElementById('btn-bts1').className='classe-btn'+(c==='BTS1'?' active':'');
   document.getElementById('btn-bts2').className='classe-btn'+(c==='BTS2'?' active':'');
-  // Charger les données
   donneesParClasse[CLASSE]={};
+  chargerLocal();
   initDonnees();
   showToast(`Chargement ${c}...`);
   const ok=await chargerDepuisSheets();
   if(!ok){chargerLocal();initDonnees();}
   initAccueil();
   aller('home');
-  showToast(`✅ Classe ${c} chargée`);
+  showToast(`✅ Classe ${c} chargée (${nEtu()} étudiants)`);
 }
 
 function initAccueil(){
@@ -486,6 +463,7 @@ function initAccueil(){
     btn.onclick=()=>{semaine=s;initAccueil();showToast(`Semaine ${s}`);};
     grid.appendChild(btn);
   }
+  document.getElementById('stat-nb').textContent=nEtu();
   document.getElementById('stat-semaine').textContent=semaine;
   document.getElementById('stat-moy').textContent=scoreSemaine(semaine);
 }
@@ -494,27 +472,25 @@ function ouvrirListe(){
   document.getElementById('liste-classe-label').textContent=`Étudiants ${CLASSE}`;
   document.getElementById('liste-sem-label').textContent=`Semaine ${semaine}`;
   document.getElementById('search-input').value='';
-  afficherListeEtudiants(PRENOMS);
+  afficherListeEtudiants(prenoms());
   aller('liste');
 }
 function filtrerEtudiants(){
   const q=document.getElementById('search-input').value.toLowerCase();
-  afficherListeEtudiants(PRENOMS.filter(p=>p.toLowerCase().includes(q)));
+  afficherListeEtudiants(prenoms().filter(p=>p.toLowerCase().includes(q)));
 }
 function afficherListeEtudiants(liste){
   const c=document.getElementById('etudiant-list');c.innerHTML='';
   liste.forEach(prenom=>{
-    const idx=PRENOMS.indexOf(prenom);
+    const idx=prenoms().indexOf(prenom);
     const scoreSem=scoreEtudiant(semaine,idx);
     const cumul=scoreCumul(idx);
     const color=avatarColor(idx);
     const sc=cumul>=13?'#3ecf8e':cumul>=10?'#f5c842':'#f87171';
     const div=document.createElement('div');div.className='etudiant-item';
     div.innerHTML=`<div class="etudiant-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
-      <div style="flex:1">
-        <div class="etudiant-name">${prenom}</div>
-        <div class="etudiant-score">S${semaine} : ${scoreSem.toFixed(2)} pts &nbsp;|&nbsp; Cumul : ${cumul.toFixed(2)}/20</div>
-      </div>
+      <div style="flex:1"><div class="etudiant-name">${prenom}</div>
+      <div class="etudiant-score">S${semaine} : ${scoreSem.toFixed(2)} pts &nbsp;|&nbsp; Cumul : ${cumul.toFixed(2)}/20</div></div>
       <div class="etudiant-badge" style="background:${sc}22;color:${sc}">${cumul.toFixed(2)}</div>`;
     div.onclick=()=>ouvrirSaisie(idx);
     c.appendChild(div);
@@ -523,12 +499,13 @@ function afficherListeEtudiants(liste){
 
 function ouvrirSaisie(idx){etudiantIdx=idx;afficherSaisie();aller('saisie');}
 function afficherSaisie(){
-  const prenom=PRENOMS[etudiantIdx];
+  const p=prenoms();
+  const prenom=p[etudiantIdx]||"?";
   const color=avatarColor(etudiantIdx);
   document.getElementById('saisie-header-name').textContent=prenom;
   document.getElementById('saisie-header-sem').textContent=`${CLASSE} · Semaine ${semaine}`;
   document.getElementById('saisie-name').textContent=prenom;
-  document.getElementById('saisie-sem').textContent=`${CLASSE} · Semaine ${semaine} · ${etudiantIdx+1}/${N_ETU}`;
+  document.getElementById('saisie-sem').textContent=`${CLASSE} · Sem. ${semaine} · ${etudiantIdx+1}/${nEtu()}`;
   document.getElementById('saisie-avatar').textContent=initiales(prenom);
   document.getElementById('saisie-avatar').style.cssText=`background:${color}22;color:${color}`;
   document.getElementById('saisie-score').textContent=scoreEtudiant(semaine,etudiantIdx).toFixed(2);
@@ -538,11 +515,9 @@ function afficherSaisie(){
   CRITERES.forEach((crit,ci)=>{
     const ptsTxt=crit.cases.map(c=>(c.pts>0?'+':'')+c.pts).join(' / ');
     const card=document.createElement('div');card.className='critere-card';
-    card.innerHTML=`<div class="critere-header">
-      <div class="critere-dot" style="background:${crit.couleur}"></div>
-      <div class="critere-name">${crit.nom}</div>
-      <div class="critere-pts">${ptsTxt} pt</div>
-    </div><div class="critere-cases" id="cc-${ci}"></div>`;
+    card.innerHTML=`<div class="critere-header"><div class="critere-dot" style="background:${crit.couleur}"></div>
+      <div class="critere-name">${crit.nom}</div><div class="critere-pts">${ptsTxt} pt</div></div>
+      <div class="critere-cases" id="cc-${ci}"></div>`;
     container.appendChild(card);
     const casesDiv=document.getElementById(`cc-${ci}`);
     if(crit.cases.length>1){
@@ -568,7 +543,7 @@ function afficherSaisie(){
     });
   });
 }
-function etudiantSuivant(){if(etudiantIdx<N_ETU-1){etudiantIdx++;afficherSaisie();}else showToast("Dernier étudiant !");}
+function etudiantSuivant(){if(etudiantIdx<nEtu()-1){etudiantIdx++;afficherSaisie();}else showToast("Dernier étudiant !");}
 function etudiantPrecedent(){if(etudiantIdx>0){etudiantIdx--;afficherSaisie();}else showToast("Premier étudiant !");}
 
 function ouvrirRapide(){
@@ -589,7 +564,7 @@ function afficherTabsCriteres(){
 function afficherRapide(){
   const crit=CRITERES[critereRapide];
   const container=document.getElementById('rapide-list');container.innerHTML='';
-  PRENOMS.forEach((prenom,idx)=>{
+  prenoms().forEach((prenom,idx)=>{
     const div=document.createElement('div');div.className='rapide-item';
     const color=avatarColor(idx);
     let casesHTML='';
@@ -600,21 +575,18 @@ function afficherRapide(){
         onclick="toggleRapide(${idx},${critereRapide},${ki})">${checked?'✓':'○'}</div>`;
     });
     div.innerHTML=`<div class="rapide-avatar" style="background:${color}22;color:${color}">${initiales(prenom)}</div>
-      <div class="rapide-name">${prenom}</div>
-      <div class="rapide-cases">${casesHTML}</div>`;
+      <div class="rapide-name">${prenom}</div><div class="rapide-cases">${casesHTML}</div>`;
     container.appendChild(div);
   });
 }
 function toggleRapide(e,ci,ki){
-  const crit=CRITERES[ci];
-  const nv=!getVal(semaine,e,ci,ki);
+  const crit=CRITERES[ci];const nv=!getVal(semaine,e,ci,ki);
   if(crit.cases.length>1&&nv)crit.cases.forEach((_,k2)=>{if(k2!==ki)setVal(semaine,e,ci,k2,false);});
-  setVal(semaine,e,ci,ki,nv);
-  afficherRapide();
+  setVal(semaine,e,ci,ki,nv);afficherRapide();
 }
 function toutCocherRapide(mode){
   const crit=CRITERES[critereRapide];
-  PRENOMS.forEach((_,idx)=>{
+  prenoms().forEach((_,idx)=>{
     crit.cases.forEach((_,ki)=>setVal(semaine,idx,critereRapide,ki,false));
     if(mode===0)setVal(semaine,idx,critereRapide,0,true);
   });
@@ -623,24 +595,15 @@ function toutCocherRapide(mode){
 }
 
 window.onload=async function(){
-  initDonnees();
   if(verifierToken()){
+    chargerLocal();
+    initDonnees();
     const ok=await chargerDepuisSheets();
-    if(!ok&&accessToken){
-      // Chargement échoué mais token présent → données locales
-      chargerLocal();initDonnees();
-      initAccueil();aller('home');
-      showToast("⚠️ Données locales (sync impossible)");
-    } else if(!accessToken){
-      // Token expiré pendant le chargement
-      chargerLocal();initDonnees();
-      initAccueil();aller('home');
-      showToast("⚠️ Session expirée — appuie sur Sync pour reconnecter");
-    } else {
-      initAccueil();aller('home');
-      showToast("✅ Données chargées !");
-    }
-  } else {
+    if(!ok){chargerLocal();initDonnees();}
+    initAccueil();
+    aller('home');
+    showToast(`✅ ${nEtu()} étudiants chargés`);
+  }else{
     chargerLocal();
     aller('login');
   }
